@@ -2,6 +2,7 @@ package demo
 
 import grails.testing.mixin.integration.Integration
 import grails.gorm.transactions.Rollback
+import spock.lang.IgnoreIf
 import spock.lang.Specification
 import org.hibernate.SessionFactory
 
@@ -20,6 +21,7 @@ class RoomServiceSpec extends Specification {
         roomService.get(room.id) != null
     }
 
+    @IgnoreIf( { System.getenv('TRAVIS') as boolean } )
     void "test list"() {
         given:
         new Room(name: 'Room 101').save()

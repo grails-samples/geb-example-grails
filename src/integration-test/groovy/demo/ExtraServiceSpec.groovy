@@ -2,6 +2,7 @@ package demo
 
 import grails.testing.mixin.integration.Integration
 import grails.gorm.transactions.Rollback
+import spock.lang.IgnoreIf
 import spock.lang.Specification
 import org.hibernate.SessionFactory
 
@@ -21,6 +22,7 @@ class ExtraServiceSpec extends Specification {
         extraService.get(extra.id) != null
     }
 
+    @IgnoreIf( { System.getenv('TRAVIS') as boolean } )
     void "test list"() {
         given:
         new Extra(name: 'Breakfast').save()
