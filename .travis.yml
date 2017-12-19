@@ -1,0 +1,6 @@
+dist: trusty
+addons:
+  chrome: stable
+jdk:
+  - oraclejdk8
+script: "./travis-build.sh"
