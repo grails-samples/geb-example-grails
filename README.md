@@ -11,6 +11,10 @@ to the name of the test class (substituting “.” with “/”).
 
 The build reports directory is [defined in build.gradle](https://github.com/grails-samples/geb-example-grails/blob/master/build.gradle#L81)
 
+To allow integration tests to be run without Geb Specifications, `RoomCRUDSpec`, `ExtraCRUDSpec` and `BookingCRUDSpec` are annotated with: 
+
+`@IgnoreIf({ !System.getProperty('geb.env') })`
+ 
 
 
  
