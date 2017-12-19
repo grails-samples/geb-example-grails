@@ -1,4 +1,6 @@
-# Example of Spock & Grails integration 
+# Example of Spock & Grails integration
+
+This project uses Geb 1.1.1 and WebDriver 2.47.1  
 
 The Spock tests [RoomCRUDSpec](https://github.com/grails-samples/geb-example-grails/blob/master/src/integration-test/groovy/com/test/RoomCRUDSpec.groovy#L17),
 [ExtraCRUDSpec](https://github.com/grails-samples/geb-example-grails/blob/master/src/integration-test/groovy/com/test/ExtraCRUDSpec.groovy#L15),
@@ -23,17 +25,7 @@ This application leverage Geb environments to run tests with three different dri
 
 - Chrome 
 - Chrome Headless
-- Firefox
+- HtmlUnit
 
 Those drivers are configured in [GebConfig.groovy](https://github.com/grails-samples/geb-example-grails/blob/master/src/integration-test/resources/GebConfig.groovy)
-
-## Gradle Plugins 
-
-The application uses [webdriver-binaries](https://github.com/energizedwork/webdriver-binaries-gradle-plugin) to cache WebDriver binaries specific to the OS the build runs on.
- 
-The application applies [Idea JUnit plugin](https://github.com/energizedwork/idea-gradle-plugins#idea-junit-plugin) to the project 
-which together with `webdriver-binaries` does the following:
-
-- configure the `ideaWorkspace` task added to the build by [Gradle's built-in IDEA](https://docs.gradle.org/current/userguide/idea_plugin.html) plugin to depend on `configureChromeDriverBinary` and `configureGeckoDriverBinary` tasks.
-- add system properties specific for the drivers setting the path to the downloaded binaries as their values to default default JUnit run configuration in IntelliJ when the configuration tasks are executed
-The above will ensure that locations of driver binaries are picked up when running tests from IntelliJ. 
+s of driver binaries are picked up when running tests from IntelliJ. 
