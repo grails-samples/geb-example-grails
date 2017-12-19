@@ -14,10 +14,10 @@ class RoomServiceSpec extends Specification {
 
     void "test get"() {
         when:
-        new Room(name: 'Room 101').save()
+        Room room = new Room(name: 'Room 101').save()
 
         then:
-        roomService.get(1) != null
+        roomService.get(room.id) != null
     }
 
     void "test list"() {

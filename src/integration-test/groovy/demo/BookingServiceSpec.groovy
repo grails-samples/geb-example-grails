@@ -35,10 +35,10 @@ class BookingServiceSpec extends Specification {
 
     void "test get"() {
         when:
-        new Booking(name: 'Phil', email: 'phil@apple.com', arrival: arrival, departure: departure).save()
+        Booking book = new Booking(name: 'Phil', email: 'phil@apple.com', arrival: arrival, departure: departure).save()
 
         then:
-        bookingService.get(1) != null
+        bookingService.get(book.id) != null
     }
 
     void "test list"() {

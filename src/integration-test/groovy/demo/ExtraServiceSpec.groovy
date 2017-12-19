@@ -15,10 +15,10 @@ class ExtraServiceSpec extends Specification {
 
     void "test get"() {
         when:
-        new Extra(name: 'Breakfast').save()
+        Extra extra = new Extra(name: 'Breakfast').save()
 
         then:
-        extraService.get(1) != null
+        extraService.get(extra.id) != null
     }
 
     void "test list"() {
