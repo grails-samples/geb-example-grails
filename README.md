@@ -45,3 +45,7 @@ which together with `webdriver-binaries` does the following:
 - configure the `ideaWorkspace` task added to the build by [Gradle's built-in IDEA](https://docs.gradle.org/current/userguide/idea_plugin.html) plugin to depend on `configureChromeDriverBinary` and `configureGeckoDriverBinary` tasks.
 - add system properties specific for the drivers setting the path to the downloaded binaries as their values to default default JUnit run configuration in IntelliJ when the configuration tasks are executed
 The above will ensure that locations of driver binaries are picked up when running tests from IntelliJ. 
+
+## Geb Tests in CI
+
+This repository runs its tests in Travis using Chrome Headless. Check `.travis.yml` and `travis-build.sh` to see the configuration.
