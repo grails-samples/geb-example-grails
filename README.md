@@ -15,6 +15,6 @@ To allow integration tests to be run without Geb Specifications, `RoomCRUDSpec`,
 
 `@IgnoreIf({ !System.getProperty('geb.env') })`
  
+The application uses [Geb Pages and Modules](https://github.com/grails-samples/geb-example-grails/tree/master/src/integration-test/groovy/com/test/pages) to faciliate test maintainability.
 
-
- 
+> The Page Object Pattern allows us to apply the same principles of modularity, reuse and encapsulation that we use in other aspects of programming to avoid such issues in browser automation code. 
