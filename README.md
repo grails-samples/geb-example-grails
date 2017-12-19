@@ -31,9 +31,9 @@ Those drivers are configured in [GebConfig.groovy](https://github.com/grails-sam
 
 You can run integration tests with different browsers by supplying `geb.env` System Property. 
 
-`./gradlew -Dgeb.env=chrome iT`
-`./gradlew -Dgeb.env=chromeHeadless iT`
-`./gradlew -Dgeb.env=firefox iT`
+`./gradlew -Dgeb.env=chrome iT`  
+`./gradlew -Dgeb.env=chromeHeadless iT`  
+`./gradlew -Dgeb.env=firefox iT`  
 
 ## Gradle Plugins 
 
