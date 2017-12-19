@@ -1,6 +1,6 @@
-# Example of Spock & Grails integration
+# Example of Spock & Grails integration 
 
-This project uses Geb 1.1.1 and WebDriver 2.47.1  
+This repositories contains a Grails 3 application which uses WebDriver 3.x and Geb 2.x. Both JDK8 only. Check [Branch geb-1.1.1](https://github.com/grails-samples/geb-example-grails/tree/geb-1.1.1) for an example of Grails 3 in combination with Geb 1.1.1, Web Driver 2.4.x JDK7 compatible. 
 
 The Spock tests [RoomCRUDSpec](https://github.com/grails-samples/geb-example-grails/blob/master/src/integration-test/groovy/com/test/RoomCRUDSpec.groovy#L17),
 [ExtraCRUDSpec](https://github.com/grails-samples/geb-example-grails/blob/master/src/integration-test/groovy/com/test/ExtraCRUDSpec.groovy#L15),
@@ -28,4 +28,14 @@ This application leverage Geb environments to run tests with three different dri
 - HtmlUnit
 
 Those drivers are configured in [GebConfig.groovy](https://github.com/grails-samples/geb-example-grails/blob/master/src/integration-test/resources/GebConfig.groovy)
-s of driver binaries are picked up when running tests from IntelliJ. 
+
+You can run integration tests with different browsers by supplying `geb.env` System Property. 
+
+`./gradlew -Dgeb.env=chrome iT`  
+`./gradlew -Dgeb.env=chromeHeadless iT`  
+`./gradlew -Dgeb.env=htmlUnit iT`  
+at locations of driver binaries are picked up when running tests from IntelliJ. 
+
+## Geb Tests in CI
+
+This repository runs its tests in Travis using Chrome Headless. Check `.travis.yml` and `travis-build.sh` to see the configuration.
