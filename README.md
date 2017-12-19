@@ -27,6 +27,12 @@ This application leverage Geb environments to run tests with three different dri
 
 Those drivers are configured in [GebConfig.groovy](https://github.com/grails-samples/geb-example-grails/blob/master/src/integration-test/resources/GebConfig.groovy)
 
+You can run integration tests with different browsers by supplying `geb.env` System Property. 
+
+`./gradlew -Dgeb.env=chrome iT`
+`./gradlew -Dgeb.env=chromeHeadless iT`
+`./gradlew -Dgeb.env=firefox iT`
+
 ## Gradle Plugins 
 
 The application uses [webdriver-binaries](https://github.com/energizedwork/webdriver-binaries-gradle-plugin) to cache WebDriver binaries specific to the OS the build runs on.
