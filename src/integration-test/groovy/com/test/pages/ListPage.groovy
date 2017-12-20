@@ -12,6 +12,7 @@ class ListPage extends ScaffoldPage {
 		entityTable(required: false) { $("div.content table", 0) }
 		entityRow { entityRows[it].module EntityRow }
 		entityRows(required: false) { entityTable.find("tbody").find("tr") }
+		nav { $('div.nav').module(ScaffoldNav) }
 	}
 
 	void select(String name, int columnIndex = 0) {

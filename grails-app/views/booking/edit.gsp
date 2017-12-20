@@ -7,13 +7,7 @@
     </head>
     <body>
         <a href="#edit-booking" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <div class="nav" role="navigation">
-            <ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-                <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-            </ul>
-        </div>
+        <g:render template="/templates/nav"/>
         <div id="edit-booking" class="content scaffold-edit" role="main">
             <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
@@ -30,6 +24,38 @@
                 <g:hiddenField name="version" value="${this.booking?.version}" />
                 <fieldset class="form">
                     <f:all bean="booking"/>
+
+                    <g:if test="${roomList}">
+                        <div class="fieldcontain">
+                            <label for="rooms"><g:message code="booking.rooms.label" default="Rooms" /></label>
+                            <ol class="property-list">
+                                <g:each var="room" in="${roomList}">
+                                    <li class="fieldcontain">
+                                        <span class="property-label">${room.name}</span>
+                                        <span>&nbsp;</span>
+                                        <g:checkBox name="rooms" value="${room.id}" checked="${bookingRoomList.any { it.id == room.id }}" />
+                                    </li>
+                                </g:each>
+                            </ol>
+                        </div>
+                    </g:if>
+
+                    <g:if test="${extraList}">
+                        <div class="fieldcontain">
+                            <label for="extras"><g:message code="booking.extras.label" default="Extras" /></label>
+                            <ol class="property-list">
+                                <g:each var="extra" in="${extraList}">
+                                    <li class="fieldcontain">
+                                        <span class="property-label">${extra.name}</span>
+                                        <span>&nbsp;</span>
+                                        <g:checkBox name="extras" value="${extra.id}" checked="${bookingExtraList.any { it.id == extra.id }}" />
+                                    </li>
+                                </g:each>
+                            </ol>
+                        </div>
+                    </g:if>
+
+
                 </fieldset>
                 <fieldset class="buttons">
                     <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />

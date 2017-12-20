@@ -9,9 +9,9 @@ import org.hibernate.SessionFactory
 
 @Integration
 @Rollback
-class BookingServiceSpec extends Specification {
+class BookingDataServiceSpec extends Specification {
 
-    BookingService bookingService
+    BookingDataService bookingDataService
     SessionFactory sessionFactory
 
     @Shared
@@ -38,7 +38,7 @@ class BookingServiceSpec extends Specification {
         Booking book = new Booking(name: 'Phil', email: 'phil@apple.com', arrival: arrival, departure: departure).save()
 
         then:
-        bookingService.get(book.id) != null
+        bookingDataService.get(book.id) != null
     }
 
     void "test list"() {
@@ -50,7 +50,7 @@ class BookingServiceSpec extends Specification {
         )
 
         when:
-        List<Booking> bookingList = bookingService.list(max: 2, offset: 2)
+        List<Booking> bookingList = bookingDataService.list(max: 2, offset: 2)
 
         then:
         bookingList.size() == 2
@@ -78,7 +78,7 @@ class BookingServiceSpec extends Specification {
         )
 
         then:
-        bookingService.count() == old(bookingService.count()) + 4
+        bookingDataService.count() == old(bookingDataService.count()) + 4
     }
 
     void "test delete"() {
@@ -89,20 +89,20 @@ class BookingServiceSpec extends Specification {
         new Booking(name: 'Johny', email: 'johny@apple.com', arrival: arrival, departure: departure).save()
 
         then:
-        bookingService.count() == old(bookingService.count()) + 4
+        bookingDataService.count() == old(bookingDataService.count()) + 4
 
         when:
-        bookingService.delete(booking.id)
+        bookingDataService.delete(booking.id)
         sessionFactory.currentSession.flush()
 
         then:
-        bookingService.count() == old(bookingService.count()) - 1
+        bookingDataService.count() == old(bookingDataService.count()) - 1
     }
 
     void "test save"() {
         when:
 
-        Booking booking = bookingService.save(new Booking(name: 'Phil', email: 'phil@apple.com', arrival: arrival, departure: departure))
+        Booking booking = bookingDataService.save(new Booking(name: 'Phil', email: 'phil@apple.com', arrival: arrival, departure: departure))
 
         then:
         booking

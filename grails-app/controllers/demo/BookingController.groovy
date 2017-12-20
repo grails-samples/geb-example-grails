@@ -7,8 +7,13 @@ import org.springframework.context.MessageSource
 @CompileStatic
 class BookingController {
 
-    BookingService bookingService
+    BookingDataService bookingDataService
+    BookingExtraService bookingExtraService
+    BookingRoomService bookingRoomService
+    RoomService roomService
+    ExtraService extraService
     MessageSource messageSource
+    BookingService bookingService
 
     static allowedMethods = [
             index: 'GET',
@@ -21,53 +26,84 @@ class BookingController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond bookingService.list(params), model:[bookingCount: bookingService.count()]
+        respond bookingDataService.list(params), model:[bookingCount: bookingDataService.count()]
     }
 
     def show(Long id) {
-        respond bookingService.get(id)
-    }
-
-    def create() {
-        respond new Booking(params)
-    }
-
-    def save(Booking booking) {
-        if (booking == null) {
+        Booking booking = bookingDataService.get(id)
+        if ( !booking ) {
             notFound()
             return
         }
+        List<Extra> extraList = bookingExtraService.findBookingExtraExtra(booking)
+        List<Room> roomList = bookingRoomService.findBookingRoomRoom(booking)
+        [booking: booking, roomList: roomList, extraList: extraList]
+    }
 
+    def create() {
+        List<Room> roomList = roomService.list([:])
+        List<Extra> extraList = extraService.list([:])
+        [
+                booking: new Booking(params),
+                roomList: roomList,
+                extraList: extraList
+        ]
+    }
+
+    def save(SaveBookingCommand cmd) {
+        if ( cmd.hasErrors() ) {
+            respond cmd.errors, view: 'edit'
+            return
+        }
+
+        Booking booking
         try {
-            bookingService.save(booking)
+            booking = bookingService.save(cmd as Booking, cmd.rooms, cmd.extras)
         } catch (ValidationException e) {
-            respond booking.errors, view:'create'
+            respond e.errors, view:'create'
             return
         }
 
         flash.message = messageSource.getMessage('default.created.message', [bookingMessage(), booking.id] as Object[], 'Booking created', request.locale)
-        redirect booking
+        redirect action: 'show', id: booking.id
     }
 
     def edit(Long id) {
-        respond bookingService.get(id)
-    }
-
-    def update(Booking booking) {
-        if (booking == null) {
+        Booking booking = bookingDataService.get(id)
+        if ( !booking ) {
             notFound()
             return
         }
+        List<Room> roomList = roomService.list([:])
+        List<Extra> extraList = extraService.list([:])
 
+        List<Extra> bookingExtraList = bookingExtraService.findBookingExtraExtra(booking)
+        List<Room> bookingRoomList = bookingRoomService.findBookingRoomRoom(booking)
+        [
+                booking: booking,
+                roomList: roomList,
+                extraList: extraList,
+                bookingExtraList: bookingExtraList,
+                bookingRoomList: bookingRoomList,
+        ]
+    }
+
+    def update(EditBookingCommand cmd) {
+        if ( cmd.hasErrors() ) {
+            respond cmd.errors, view: 'edit'
+            return
+        }
+
+        Booking booking
         try {
-            bookingService.save(booking)
+            booking = bookingService.update(cmd as Booking, cmd.rooms, cmd.extras)
         } catch (ValidationException e) {
-            respond booking.errors, view:'edit'
+            respond e.errors, view:'edit'
             return
         }
 
         flash.message = messageSource.getMessage('default.updated.message', [bookingMessage(), booking.id] as Object[], 'Booking update', request.locale)
-        redirect booking
+        redirect action: 'show', id: booking.id
     }
 
     def delete(Long id) {

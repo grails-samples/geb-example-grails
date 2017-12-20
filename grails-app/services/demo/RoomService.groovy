@@ -1,6 +1,7 @@
 package demo
 
 import grails.gorm.services.Service
+import grails.gorm.services.Where
 
 @Service(Room)
 interface RoomService {
@@ -15,4 +16,6 @@ interface RoomService {
 
     Room save(Room room)
 
+    @Where({ id in ids })
+    List<Room> find(List<Long> ids)
 }
