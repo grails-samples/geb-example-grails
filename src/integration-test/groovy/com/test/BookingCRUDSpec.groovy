@@ -235,7 +235,6 @@ class BookingCRUDSpec extends GebReportingSpec {
 		showPage.value('Extras') == 'Breakfast,Champagne'
 	}
 
-	@IgnoreIf({ System.getProperty('geb.env') == 'htmlUnit' })
 	def "delete booking"() {
 		given:
 		ShowPage page = browser.page ShowPage

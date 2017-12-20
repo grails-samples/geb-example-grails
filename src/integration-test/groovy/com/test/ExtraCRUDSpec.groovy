@@ -108,7 +108,6 @@ class ExtraCRUDSpec extends GebReportingSpec {
 		at ShowPage
 	}
 
-	@IgnoreIf({ System.getProperty('geb.env') == 'htmlUnit' })
 	def "delete extra"() {
 		given:
 		ShowPage page = browser.page ShowPage

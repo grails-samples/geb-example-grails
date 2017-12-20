@@ -110,7 +110,6 @@ class RoomCRUDSpec extends GebReportingSpec {
 		at ShowPage
 	}
 
-	@IgnoreIf({ System.getProperty('geb.env') == 'htmlUnit' })
 	def "delete room"() {
 		given:
 		ShowPage page = browser.page ShowPage

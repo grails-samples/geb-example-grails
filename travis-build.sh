@@ -11,6 +11,4 @@ if [[ $EXIT_STATUS -ne 0 ]]; then
   exit $EXIT_STATUS
 fi
 
-./gradlew check -Dgeb.env=htmlUnit || EXIT_STATUS=$?
-
 exit $EXIT_STATUS

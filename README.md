@@ -33,7 +33,7 @@ You can run integration tests with different browsers by supplying `geb.env` Sys
 
 `./gradlew -Dgeb.env=chrome iT`  
 `./gradlew -Dgeb.env=chromeHeadless iT`  
-`./gradlew -Dgeb.env=htmlUnit iT`  
+
 at locations of driver binaries are picked up when running tests from IntelliJ. 
 
 ## Geb Tests in CI

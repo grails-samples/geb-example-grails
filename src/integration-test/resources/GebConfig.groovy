@@ -1,6 +1,5 @@
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
-import org.openqa.selenium.htmlunit.HtmlUnitDriver
 
 environments {
 
@@ -16,10 +15,5 @@ environments {
             o.addArguments('headless')
             new ChromeDriver(o)
         }
-    }
-
-    // run via “./gradlew -Dgeb.env=htmlUnit iT”
-    htmlUnit {
-        driver = { new HtmlUnitDriver() }
     }
 }
