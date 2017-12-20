@@ -1,6 +1,8 @@
 package demo
 
+import grails.gorm.services.Query
 import grails.gorm.services.Service
+import grails.gorm.services.Where
 
 @Service(Extra)
 interface ExtraService {
@@ -19,4 +21,6 @@ interface ExtraService {
 
     Extra update(Serializable id, String name)
 
+    @Where({ id in ids })
+    List<Extra> find(List<Long> ids)
 }

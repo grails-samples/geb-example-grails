@@ -1,5 +1,6 @@
 package com.test.pages
 
+import geb.module.Checkbox
 import geb.module.TextInput
 import geb.navigator.Navigator
 
@@ -17,6 +18,16 @@ class CreatePage extends ScaffoldPage {
 		selectDay { $("select", name: "${it}_day") }
 		selectMonth { $("select", name: "${it}_month") }
 		selectYear { $("select", name: "${it}_year") }
+		field { $("li.fieldcontain .property-label", text: it).parent() }
+		fieldCheckbox { field(it).find('input', type: 'checkbox', 0).module(Checkbox) }
+	}
+
+	void check(String name) {
+		fieldCheckbox(name).check()
+	}
+
+	void uncheck(String name) {
+		fieldCheckbox(name).uncheck()
 	}
 
 	void populateDate(String name, int day, int month, int year) {

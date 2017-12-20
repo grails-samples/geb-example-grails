@@ -61,7 +61,7 @@ class ExtraControllerSpec extends Specification implements ControllerUnitTest<Ex
 
     void "Test the save action with an invalid instance"() {
         given:
-        controller.extraService =Stub(ExtraService) {
+        controller.extraService = Stub(ExtraService) {
             save(_ as String) >>  { String name ->
                 Extra extra = new Extra()
                 throw new ValidationException("Invalid instance", extra.errors)
