@@ -1,4 +1,4 @@
-# Example of Spock & Grails integration 
+# Example of Geb & Grails integration 
 
 This repositories contains a Grails 3 application which uses WebDriver 3.x and Geb 2.x. Both JDK8 only. Check [Branch geb-1.1.1](https://github.com/grails-samples/geb-example-grails/tree/geb-1.1.1) for an example of Grails 3 in combination with Geb 1.1.1, Web Driver 2.4.x JDK7 compatible. 
 
