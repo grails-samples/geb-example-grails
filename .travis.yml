@@ -1,6 +1,7 @@
 dist: trusty
 addons:
   chrome: stable
+sudo: required
 jdk:
   - oraclejdk8
 script: "./travis-build.sh"
