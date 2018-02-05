@@ -1,7 +1,5 @@
 package demo.pages
 
-import geb.Module
-
 class ListPage extends ScaffoldPage {
 	static at = {
 		title ==~ /.+ List/
@@ -40,14 +38,5 @@ class ListPage extends ScaffoldPage {
 
 	void newEntity() {
 		newEntityButton.click()
-	}
-}
-
-class EntityRow extends Module {
-	static content = {
-		cell { $('td', it) }
-		cellText { cell(it).text() }
-		cellHrefText { cell(it).find('a').text() }
-		showLink(to: ShowPage) { cell(0).find('a') }
 	}
 }
