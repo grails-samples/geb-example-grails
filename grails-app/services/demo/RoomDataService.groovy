@@ -16,6 +16,8 @@ interface RoomDataService {
 
     void delete(Serializable id)
 
+    Room save(String name)
+
     Room save(Room room)
 
     @Where({ id in ids })
