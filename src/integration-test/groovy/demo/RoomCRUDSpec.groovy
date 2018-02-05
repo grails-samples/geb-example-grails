@@ -20,7 +20,7 @@ class RoomCRUDSpec extends GebReportingSpec {
 
 	def 'there are no rooms'() {
 		when:
-		ListPage page = browser.to ListPage, 'room'
+		ListPage page = to ListPage, 'room'
 
 		then:
 		page.numberOfRows() == 0

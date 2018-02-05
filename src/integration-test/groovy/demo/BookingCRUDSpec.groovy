@@ -49,9 +49,7 @@ class BookingCRUDSpec extends GebReportingSpec {
 	
 	def 'there are no bookings'() {
 		when:
-		ShowPage showPage = browser.page ShowPage
-		showPage.nav.select('Home')
-		ListPage page = browser.page ListPage
+		ListPage page = to ListPage, 'booking'
 
 		then:
 		page.numberOfRows() == 0
