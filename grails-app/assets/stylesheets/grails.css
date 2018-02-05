@@ -28,7 +28,7 @@ pre {
 
 /* customizing bootstrap nav bar */
 .navbar {
-    margin-bottom: 0px;
+    margin-bottom: 0;
     padding-right: 110px;
 }
 .navbar .container {
@@ -45,7 +45,7 @@ pre {
 }
 .navbar-default, .navbar-static-top {
     background-color: #424649;
-    border: 0px;
+    border: 0;
 }
 a.navbar-brand {
     color: white !important;
@@ -86,13 +86,13 @@ a.navbar-brand {
     }
 
     .navbar {
-        padding-right: 0px;
+        padding-right: 0;
     }
 }
 
 #fork-me{
     position: fixed;
-    padding: 0px 50px 0px 50px;
+    padding: 0 50px 0 50px;
     top: 40px;
     right: -60px;
     background-color: #a60000;
@@ -108,7 +108,7 @@ a.navbar-brand {
 }
 
 #fork-me p {
-    margin: 0em 0;
+    margin: 0 0;
 }
 
 #band {
@@ -161,14 +161,14 @@ a.navbar-brand {
 
 #logos-holder {
     display: inline-block;
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     text-align: center;
 }
 
 #logos-holder .logo {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     display: inline-block;
     width: 100px;
     height: 80px;
@@ -307,7 +307,7 @@ code, kbd, pre, samp {
         width: 100%;
         position: relative;
         margin-top: 30px;
-        right: 0px;
+        right: 0;
     }
 
     #contribute-btn button {
@@ -327,7 +327,7 @@ code, kbd, pre, samp {
     float: right;
     font-size: 30px;
     padding: 15px;
-    margin: 10px 0px 10px 20px;
+    margin: 10px 0 10px 20px;
     border: 2px solid #db4800;
     border-radius: 6px;
     background-color: #db4800;
@@ -1024,7 +1024,7 @@ html, body, .st-container, .st-pusher, .st-content {
     float: left;
     margin-right: 40px;
     margin-top: 1em;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     width: 300px;
     height: auto;
 }
