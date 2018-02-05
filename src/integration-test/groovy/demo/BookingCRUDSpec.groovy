@@ -1,9 +1,9 @@
-package com.test
+package demo
 
-import com.test.pages.CreatePage
-import com.test.pages.EditPage
-import com.test.pages.ListPage
-import com.test.pages.ShowPage
+import demo.pages.CreatePage
+import demo.pages.EditPage
+import demo.pages.ListPage
+import demo.pages.ShowPage
 import geb.spock.GebReportingSpec
 import grails.testing.mixin.integration.Integration
 import spock.lang.IgnoreIf
@@ -18,7 +18,7 @@ class BookingCRUDSpec extends GebReportingSpec {
 		browser.baseUrl = "http://localhost:${serverPort}/"
 	}
 
-	def "create rooms"() {
+	def 'create rooms'() {
 		when:
 		go('room/create')
 
@@ -27,7 +27,7 @@ class BookingCRUDSpec extends GebReportingSpec {
 
 		when:
 		CreatePage page = browser.page CreatePage
-		page.populate('name', "Room 101")
+		page.populate('name', 'Room 101')
 		page.save()
 
 		then:
@@ -42,7 +42,7 @@ class BookingCRUDSpec extends GebReportingSpec {
 
 		when:
 		page = browser.page CreatePage
-		page.populate('name', "Room 102")
+		page.populate('name', 'Room 102')
 		page.save()
 
 		then:
@@ -57,14 +57,14 @@ class BookingCRUDSpec extends GebReportingSpec {
 
 		when:
 		page = browser.page CreatePage
-		page.populate('name', "Room 103")
+		page.populate('name', 'Room 103')
 		page.save()
 
 		then:
 		at ShowPage
 	}
 
-	def "create extras"() {
+	def 'create extras'() {
 		when:
 		ShowPage showPage = browser.page ShowPage
 		showPage.nav.select('Extra List')
@@ -81,7 +81,7 @@ class BookingCRUDSpec extends GebReportingSpec {
 
 		when:
 		CreatePage page = browser.page CreatePage
-		page.populate('name', "Breakfast")
+		page.populate('name', 'Breakfast')
 		page.save()
 
 		then:
@@ -96,7 +96,7 @@ class BookingCRUDSpec extends GebReportingSpec {
 
 		when:
 		page = browser.page CreatePage
-		page.populate('name', "Crib")
+		page.populate('name', 'Crib')
 		page.save()
 
 		then:
@@ -111,14 +111,14 @@ class BookingCRUDSpec extends GebReportingSpec {
 
 		when:
 		page = browser.page CreatePage
-		page.populate('name', "Champagne")
+		page.populate('name', 'Champagne')
 		page.save()
 
 		then:
 		at ShowPage
 	}
 	
-	def "there are no bookings"() {
+	def 'there are no bookings'() {
 		when:
 		ShowPage showPage = browser.page ShowPage
 		showPage.nav.select('Home')
@@ -128,7 +128,7 @@ class BookingCRUDSpec extends GebReportingSpec {
 		page.numberOfRows() == 0
 	}
 
-	def "add a booking"() {
+	def 'add a booking'() {
 		given:
 		ListPage page = browser.page ListPage
 
@@ -139,7 +139,7 @@ class BookingCRUDSpec extends GebReportingSpec {
 		at CreatePage
 	}
 	
-	def "enter the details"() {
+	def 'enter the details'() {
 		given:
 		CreatePage page = browser.page CreatePage
 
@@ -160,21 +160,21 @@ class BookingCRUDSpec extends GebReportingSpec {
 		at ShowPage
 	}
 	
-	def "check the entered details"() {
+	def 'check the entered details'() {
 		given:
 		ShowPage page = browser.page ShowPage
 
 		expect:
-		page.value('Name') == "Tim"
-		page.value('Adults') == "2"
-		page.value('Email') == "tim@apple.com"
+		page.value('Name') == 'Tim'
+		page.value('Adults') == '2'
+		page.value('Email') == 'tim@apple.com'
 		page.value('Arrival').startsWith('2017-12-30')
 		page.value('Departure').startsWith('2017-12-31')
 		page.value('Rooms') == 'Room 101,Room 102'
 		page.value('Extras') == 'Breakfast'
 	}
 
-	def "edit the details"() {
+	def 'edit the details'() {
 		given:
 		ShowPage page = browser.page ShowPage
 
@@ -198,7 +198,7 @@ class BookingCRUDSpec extends GebReportingSpec {
 		at ShowPage
 	}
 	
-	def "check in listing"() {
+	def 'check in listing'() {
 		when:
 		ShowPage page = browser.page ShowPage
 		page.nav.select('Home')
@@ -216,10 +216,10 @@ class BookingCRUDSpec extends GebReportingSpec {
 		def row = listPage.entityRow(0)
 
 		then:
-		row.cellText(0) == "Tim Cook"
+		row.cellText(0) == 'Tim Cook'
 	}
 	
-	def "show row"() {
+	def 'show row'() {
 		given:
 		ListPage page = browser.page ListPage
 
@@ -235,7 +235,6 @@ class BookingCRUDSpec extends GebReportingSpec {
 		showPage.value('Extras') == 'Breakfast,Champagne'
 	}
 
-	@IgnoreIf({ System.getProperty('geb.env') == 'htmlUnit' })
 	def "delete booking"() {
 		given:
 		ShowPage page = browser.page ShowPage

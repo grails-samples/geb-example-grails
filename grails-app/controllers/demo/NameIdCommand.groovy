@@ -1,7 +1,9 @@
 package demo
 
 import grails.validation.Validateable
+import grails.compiler.GrailsCompileStatic
 
+@GrailsCompileStatic
 class NameIdCommand implements Validateable {
     Long id
     String name

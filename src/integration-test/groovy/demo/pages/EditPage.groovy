@@ -1,4 +1,4 @@
-package com.test.pages
+package demo.pages
 
 import geb.module.Checkbox
 import geb.module.TextInput
@@ -10,10 +10,10 @@ class EditPage extends ScaffoldPage {
 	}
 	
 	static content = {
-		inputField { $("input", name: it).module(TextInput) }
-		updateButton(to: ShowPage) { $("input", value: "Update") }
-		deleteButton(to: ListPage) { $("input", value: "Delete") }
-		field { $("li.fieldcontain .property-label", text: it).parent() }
+		inputField { $('input', name: it).module(TextInput) }
+		updateButton(to: ShowPage) { $('input', value: 'Update') }
+		deleteButton(to: ListPage) { $('input', value: 'Delete') }
+		field { $('li.fieldcontain .property-label', text: it).parent() }
 		fieldCheckbox { field(it).find('input', type: 'checkbox', 0).module(Checkbox) }
 	}
 

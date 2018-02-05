@@ -4,10 +4,11 @@ import grails.validation.ValidationException
 import groovy.transform.CompileStatic
 import org.springframework.context.MessageSource
 
+@SuppressWarnings(['FactoryMethodName', 'ReturnNullFromCatchBlock'])
 @CompileStatic
-class ExtraController {
+class ExtraController implements BeanMessage {
 
-    ExtraService extraService
+    ExtraDataService extraDataService
     MessageSource messageSource
 
     static allowedMethods = [
@@ -17,15 +18,16 @@ class ExtraController {
             save: 'POST',
             edit: 'GET',
             update: 'PUT',
-            delete: 'DELETE']
+            delete: 'DELETE',
+    ]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond extraService.list(params), model:[extraCount: extraService.count()]
+        respond extraDataService.list(params), model: [extraCount: extraDataService.count()]
     }
 
     def show(Long id) {
-        respond extraService.get(id)
+        respond extraDataService.get(id)
     }
 
     def create() {
@@ -40,9 +42,10 @@ class ExtraController {
 
         Extra extra
         try {
-            extra = extraService.save(cmd.name)
+            extra = extraDataService.save(cmd.name)
         } catch (ValidationException e) {
-            respond e.errors, view:'create'
+            flash.error = beanMessage(e, messageSource).join(',')
+            render view: 'create'
             return
         }
 
@@ -51,21 +54,21 @@ class ExtraController {
     }
 
     def edit(Long id) {
-        respond extraService.get(id)
+        respond extraDataService.get(id)
     }
 
     def update(NameIdCommand cmd) {
         if ( cmd.hasErrors() ) {
-            respond cmd.errors, view:'edit'
+            respond cmd.errors, view: 'edit'
             return
         }
 
         Extra extra
         try {
-            extra = extraService.update(cmd.id, cmd.name)
-
+            extra = extraDataService.update(cmd.id, cmd.name)
         } catch (ValidationException e) {
-            respond e.errors, view:'edit'
+            flash.error = beanMessage(e, messageSource).join(',')
+            render view: 'edit'
             return
         }
         flash.message = messageSource.getMessage('default.updated.message', [extraMessage(), extra.id] as Object[], 'Extra updated', request.locale)
@@ -78,14 +81,14 @@ class ExtraController {
             return
         }
 
-        extraService.delete(id)
+        extraDataService.delete(id)
         flash.message = messageSource.getMessage('default.deleted.message', [extraMessage(), id] as Object[], 'Extra deleted', request.locale)
-        redirect action:"index", method:"GET"
+        redirect action: 'index', method: 'GET'
     }
 
     protected void notFound() {
         flash.message = messageSource.getMessage('default.not.found.message', [extraMessage(), params.id] as Object[], 'Extra not found', request.locale)
-        redirect action: "index", method: "GET"
+        redirect action: 'index', method: 'GET'
     }
 
     protected String extraMessage() {

@@ -1,4 +1,4 @@
-package com.test.pages
+package demo.pages
 
 import geb.Module
 
@@ -8,10 +8,10 @@ class ListPage extends ScaffoldPage {
 	}
 	
 	static content = {
-		newEntityButton(to: CreatePage) { $("a", text: contains('New')) }
-		entityTable(required: false) { $("div.content table", 0) }
+		newEntityButton(to: CreatePage) { $('a', text: contains('New')) }
+		entityTable(required: false) { $('div.content table', 0) }
 		entityRow { entityRows[it].module EntityRow }
-		entityRows(required: false) { entityTable.find("tbody").find("tr") }
+		entityRows(required: false) { entityTable.find('tbody').find('tr') }
 		nav { $('div.nav').module(ScaffoldNav) }
 	}
 
@@ -39,9 +39,9 @@ class ListPage extends ScaffoldPage {
 
 class EntityRow extends Module {
 	static content = {
-		cell { $("td", it) }
+		cell { $('td', it) }
 		cellText { cell(it).text() }
-		cellHrefText{ cell(it).find('a').text() }
-		showLink(to: ShowPage) { cell(0).find("a") }
+		cellHrefText { cell(it).find('a').text() }
+		showLink(to: ShowPage) { cell(0).find('a') }
 	}
 }

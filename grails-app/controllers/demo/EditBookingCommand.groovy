@@ -1,8 +1,8 @@
 package demo
 
-import grails.compiler.GrailsCompileStatic
 import grails.validation.Validateable
 import groovy.transform.CompileDynamic
+import grails.compiler.GrailsCompileStatic
 
 @GrailsCompileStatic
 class EditBookingCommand implements Validateable {
@@ -38,15 +38,14 @@ class EditBookingCommand implements Validateable {
 
     Object asType(Class clazz) {
         if (clazz == Booking) {
-            def booking = new Booking()
+            Booking booking = new Booking()
             copyProperties(this, booking)
             return booking
         }
-        else {
-            super.asType(clazz)
-        }
+        super.asType(clazz)
     }
 
+    @SuppressWarnings('MethodParameterTypeRequired')
     @CompileDynamic
     def copyProperties(source, target) {
         source.properties.each { key, value ->

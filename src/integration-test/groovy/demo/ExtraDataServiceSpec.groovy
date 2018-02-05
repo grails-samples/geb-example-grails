@@ -7,18 +7,17 @@ import org.hibernate.SessionFactory
 
 @Integration
 @Rollback
-class ExtraServiceSpec extends Specification {
+class ExtraDataServiceSpec extends Specification {
 
-    ExtraService extraService
+    ExtraDataService extraDataService
     SessionFactory sessionFactory
-
 
     void "test get"() {
         when:
         Extra extra = new Extra(name: 'Breakfast').save()
 
         then:
-        extraService.get(extra.id) != null
+        extraDataService.get(extra.id) != null
     }
 
     void "test list"() {
@@ -29,7 +28,7 @@ class ExtraServiceSpec extends Specification {
         new Extra(name: 'Late Departure').save()
 
         when:
-        List<Extra> extraList = extraService.list(max: 2, offset: 2)
+        List<Extra> extraList = extraDataService.list(max: 2, offset: 2)
 
         then:
         extraList.size() == 2
@@ -45,7 +44,7 @@ class ExtraServiceSpec extends Specification {
         new Extra(name: 'Late Departure').save()
 
         then:
-        extraService.count() == old(extraService.count()) + 4
+        extraDataService.count() == old(extraDataService.count()) + 4
     }
 
     void "test delete"() {
@@ -56,19 +55,19 @@ class ExtraServiceSpec extends Specification {
         new Extra(name: 'Late Departure').save()
 
         then:
-        extraService.count() == old(extraService.count()) + 4
+        extraDataService.count() == old(extraDataService.count()) + 4
 
         when:
-        extraService.delete(extra.id)
+        extraDataService.delete(extra.id)
         sessionFactory.currentSession.flush()
 
         then:
-        extraService.count() == old(extraService.count()) - 1
+        extraDataService.count() == old(extraDataService.count()) - 1
     }
 
     void "test save"() {
         when:
-        Extra extra = extraService.save(new Extra(name: 'Breakfast'))
+        Extra extra = extraDataService.save(new Extra(name: 'Breakfast'))
 
         then:
         extra

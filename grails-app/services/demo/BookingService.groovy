@@ -8,28 +8,26 @@ import groovy.transform.CompileStatic
 class BookingService {
 
     BookingDataService bookingDataService
-    RoomService roomService
-    ExtraService extraService
-    BookingRoomService bookingRoomService
-    BookingExtraService bookingExtraService
+    RoomDataService roomDataService
+    ExtraDataService extraDataService
+    BookingRoomDataService bookingRoomDataService
+    BookingExtraDataService bookingExtraDataService
 
     @Transactional
     Booking save(Booking bookingInstance, List<Long> roomIds, List<Long> extraIds) {
-
         Booking booking = bookingDataService.save(bookingInstance)
-
         if ( roomIds ) {
-            List<Room> rooms = roomService.find(roomIds)
+            List<Room> rooms = roomDataService.find(roomIds)
             rooms?.each { Room room ->
-                bookingRoomService.save(booking, room)
+                bookingRoomDataService.save(booking, room)
             }
         }
 
         if ( extraIds ) {
-            List<Extra> extras = extraService.find(extraIds)
+            List<Extra> extras = extraDataService.find(extraIds)
 
             extras?.each { Extra extra ->
-                bookingExtraService.save(booking, extra)
+                bookingExtraDataService.save(booking, extra)
             }
         }
 
@@ -39,8 +37,8 @@ class BookingService {
     @Transactional
     Booking delete(Long bookingId) {
         Booking booking = bookingDataService.get(bookingId)
-        bookingExtraService.delete(booking)
-        bookingRoomService.delete(booking)
+        bookingExtraDataService.delete(booking)
+        bookingRoomDataService.delete(booking)
         bookingDataService.delete(bookingId)
         booking
     }
@@ -71,48 +69,47 @@ class BookingService {
 
     @Transactional
     protected void updateExtras(Booking booking, List<Long> extraIds) {
-        List<Extra> previousExtraList = bookingExtraService.findBookingExtraExtra(booking)
+        List<Extra> previousExtraList = bookingExtraDataService.findBookingExtraExtra(booking)
         List<Long> previousExtraIds = previousExtraList*.id
 
         List<Long> extraIdsToBeInserted = extraIds - previousExtraIds
 
         if ( extraIdsToBeInserted ) {
-            List<Extra> extras = extraService.find(extraIdsToBeInserted)
+            List<Extra> extras = extraDataService.find(extraIdsToBeInserted)
             extras?.each { Extra extra ->
-                bookingExtraService.save(booking, extra)
+                bookingExtraDataService.save(booking, extra)
             }
         }
 
         List<Long> extraIdsToBeDeleted = previousExtraIds - extraIds
         if ( extraIdsToBeDeleted ) {
-            List<Extra> extras = extraService.find(extraIdsToBeDeleted)
+            List<Extra> extras = extraDataService.find(extraIdsToBeDeleted)
             extras?.each { Extra extra ->
-                bookingExtraService.delete(booking, extra)
+                bookingExtraDataService.delete(booking, extra)
             }
         }
     }
 
     @Transactional
     protected void updateRooms(Booking booking, List<Long> roomIds) {
-        List<Room> previousRoomList = bookingRoomService.findBookingRoomRoom(booking)
+        List<Room> previousRoomList = bookingRoomDataService.findBookingRoomRoom(booking)
         List<Long> previousRoomIds = previousRoomList*.id
 
         List<Long> roomIdsToBeInserted = roomIds - previousRoomIds
 
         if ( roomIdsToBeInserted ) {
-            List<Room> rooms = roomService.find(roomIdsToBeInserted)
+            List<Room> rooms = roomDataService.find(roomIdsToBeInserted)
             rooms?.each { Room room ->
-                bookingRoomService.save(booking, room)
+                bookingRoomDataService.save(booking, room)
             }
         }
 
         List<Long> roomIdsToBeDeleted = previousRoomIds - roomIds
         if ( roomIdsToBeDeleted ) {
-            List<Room> rooms = roomService.find(roomIdsToBeDeleted)
+            List<Room> rooms = roomDataService.find(roomIdsToBeDeleted)
             rooms?.each { Room room ->
-                bookingRoomService.delete(booking, room)
+                bookingRoomDataService.delete(booking, room)
             }
         }
-
     }
 }

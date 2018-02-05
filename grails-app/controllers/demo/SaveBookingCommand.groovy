@@ -36,15 +36,14 @@ class SaveBookingCommand implements Validateable {
 
     Object asType(Class clazz) {
         if (clazz == Booking) {
-            def booking = new Booking()
+            Booking booking = new Booking()
             copyProperties(this, booking)
             return booking
         }
-        else {
-            super.asType(clazz)
-        }
+        super.asType(clazz)
     }
 
+    @SuppressWarnings('MethodParameterTypeRequired')
     @CompileDynamic
     def copyProperties(source, target) {
         source.properties.each { key, value ->

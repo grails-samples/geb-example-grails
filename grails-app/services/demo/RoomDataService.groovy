@@ -2,9 +2,11 @@ package demo
 
 import grails.gorm.services.Service
 import grails.gorm.services.Where
+import groovy.transform.CompileStatic
 
+@CompileStatic
 @Service(Room)
-interface RoomService {
+interface RoomDataService {
 
     Room get(Serializable id)
 

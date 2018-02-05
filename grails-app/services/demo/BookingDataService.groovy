@@ -1,7 +1,9 @@
 package demo
 
 import grails.gorm.services.Service
+import groovy.transform.CompileStatic
 
+@CompileStatic
 @Service(Booking)
 interface BookingDataService {
 
@@ -14,5 +16,4 @@ interface BookingDataService {
     void delete(Serializable id)
 
     Booking save(Booking booking)
-
 }

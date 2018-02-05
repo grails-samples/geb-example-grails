@@ -95,3 +95,9 @@ assets {
     minifyJs = true
     minifyCss = true
 }
+
+apply from: "${rootProject.projectDir}/gradle/codenarc.gradle"
+
+codenarcMain.group 'static analysis'
+codenarcTest.group 'static analysis'
+codenarcIntegrationTest.group 'static analysis'

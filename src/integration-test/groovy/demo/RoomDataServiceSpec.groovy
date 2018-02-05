@@ -7,9 +7,9 @@ import org.hibernate.SessionFactory
 
 @Integration
 @Rollback
-class RoomServiceSpec extends Specification {
+class RoomDataServiceSpec extends Specification {
 
-    RoomService roomService
+    RoomDataService roomDataService
     SessionFactory sessionFactory
 
     void "test get"() {
@@ -17,7 +17,7 @@ class RoomServiceSpec extends Specification {
         Room room = new Room(name: 'Room 101').save()
 
         then:
-        roomService.get(room.id) != null
+        roomDataService.get(room.id) != null
     }
 
     void "test list"() {
@@ -28,7 +28,7 @@ class RoomServiceSpec extends Specification {
         new Room(name: 'Room 104').save()
 
         when:
-        List<Room> roomList = roomService.list(max: 2, offset: 2)
+        List<Room> roomList = roomDataService.list(max: 2, offset: 2)
 
         then:
         roomList.size() == 2
@@ -44,7 +44,7 @@ class RoomServiceSpec extends Specification {
         new Room(name: 'Room 104').save()
 
         then:
-        roomService.count() == old(roomService.count()) + 4
+        roomDataService.count() == old(roomDataService.count()) + 4
     }
 
     void "test delete"() {
@@ -56,19 +56,19 @@ class RoomServiceSpec extends Specification {
         new Room(name: 'Room 105').save()
 
         then:
-        roomService.count() == old(roomService.count()) + 5
+        roomDataService.count() == old(roomDataService.count()) + 5
 
         when:
-        roomService.delete(room.id)
+        roomDataService.delete(room.id)
         sessionFactory.currentSession.flush()
 
         then:
-        roomService.count() == old(roomService.count()) + -1
+        roomDataService.count() == old(roomDataService.count()) + -1
     }
 
     void "test save"() {
         when:
-        Room room = roomService.save(new Room(name: 'Room 106'))
+        Room room = roomDataService.save(new Room(name: 'Room 106'))
 
         then:
         room

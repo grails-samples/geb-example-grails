@@ -4,29 +4,30 @@ import grails.validation.ValidationException
 import groovy.transform.CompileStatic
 import org.springframework.context.MessageSource
 
+@SuppressWarnings(['FactoryMethodName', 'ReturnNullFromCatchBlock'])
 @CompileStatic
-class BookingController {
+class BookingController implements BeanMessage {
 
     BookingDataService bookingDataService
-    BookingExtraService bookingExtraService
-    BookingRoomService bookingRoomService
-    RoomService roomService
-    ExtraService extraService
+    BookingExtraDataService bookingExtraDataService
+    BookingRoomDataService bookingRoomDataService
+    RoomDataService roomDataService
+    ExtraDataService extraDataService
     MessageSource messageSource
     BookingService bookingService
 
     static allowedMethods = [
             index: 'GET',
             create: 'GET',
-            save: "POST",
+            save: 'POST',
             edit: 'GET',
-            update: "PUT",
-            delete: "DELETE"
+            update: 'PUT',
+            delete: 'DELETE',
     ]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond bookingDataService.list(params), model:[bookingCount: bookingDataService.count()]
+        respond bookingDataService.list(params), model: [bookingCount: bookingDataService.count()]
     }
 
     def show(Long id) {
@@ -35,18 +36,18 @@ class BookingController {
             notFound()
             return
         }
-        List<Extra> extraList = bookingExtraService.findBookingExtraExtra(booking)
-        List<Room> roomList = bookingRoomService.findBookingRoomRoom(booking)
+        List<Extra> extraList = bookingExtraDataService.findBookingExtraExtra(booking)
+        List<Room> roomList = bookingRoomDataService.findBookingRoomRoom(booking)
         [booking: booking, roomList: roomList, extraList: extraList]
     }
 
     def create() {
-        List<Room> roomList = roomService.list([:])
-        List<Extra> extraList = extraService.list([:])
+        List<Room> roomList = roomDataService.list([:])
+        List<Extra> extraList = extraDataService.list([:])
         [
                 booking: new Booking(params),
                 roomList: roomList,
-                extraList: extraList
+                extraList: extraList,
         ]
     }
 
@@ -60,7 +61,8 @@ class BookingController {
         try {
             booking = bookingService.save(cmd as Booking, cmd.rooms, cmd.extras)
         } catch (ValidationException e) {
-            respond e.errors, view:'create'
+            flash.error = beanMessage(e, messageSource).join(',')
+            render view: 'create'
             return
         }
 
@@ -74,11 +76,11 @@ class BookingController {
             notFound()
             return
         }
-        List<Room> roomList = roomService.list([:])
-        List<Extra> extraList = extraService.list([:])
+        List<Room> roomList = roomDataService.list([:])
+        List<Extra> extraList = extraDataService.list([:])
 
-        List<Extra> bookingExtraList = bookingExtraService.findBookingExtraExtra(booking)
-        List<Room> bookingRoomList = bookingRoomService.findBookingRoomRoom(booking)
+        List<Extra> bookingExtraList = bookingExtraDataService.findBookingExtraExtra(booking)
+        List<Room> bookingRoomList = bookingRoomDataService.findBookingRoomRoom(booking)
         [
                 booking: booking,
                 roomList: roomList,
@@ -98,7 +100,8 @@ class BookingController {
         try {
             booking = bookingService.update(cmd as Booking, cmd.rooms, cmd.extras)
         } catch (ValidationException e) {
-            respond e.errors, view:'edit'
+            flash.error = beanMessage(e, messageSource).join(',')
+            render view: 'edit'
             return
         }
 
@@ -114,12 +117,12 @@ class BookingController {
 
         bookingService.delete(id)
         flash.message = messageSource.getMessage('default.deleted.message', [bookingMessage(), id] as Object[], 'Booking deleted', request.locale)
-        redirect action:"index", method:"GET"
+        redirect action: 'index', method: 'GET'
     }
 
     protected void notFound() {
         flash.message = messageSource.getMessage('default.not.found.message', [bookingMessage(), params.id] as Object[], 'Booking not found', request.locale)
-        redirect action: "index", method: "GET"
+        redirect action: 'index', method: 'GET'
     }
 
     protected String bookingMessage() {

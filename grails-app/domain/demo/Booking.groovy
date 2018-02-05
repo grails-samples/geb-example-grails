@@ -1,7 +1,11 @@
 package demo
 
 import grails.compiler.GrailsCompileStatic
+import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
 
+@ToString
+@EqualsAndHashCode
 @GrailsCompileStatic
 class Booking {
     String name

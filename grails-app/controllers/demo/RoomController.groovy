@@ -4,10 +4,11 @@ import grails.validation.ValidationException
 import groovy.transform.CompileStatic
 import org.springframework.context.MessageSource
 
+@SuppressWarnings(['FactoryMethodName', 'ReturnNullFromCatchBlock'])
 @CompileStatic
-class RoomController {
+class RoomController implements BeanMessage {
 
-    RoomService roomService
+    RoomDataService roomDataService
 
     MessageSource messageSource
 
@@ -17,16 +18,16 @@ class RoomController {
             save: 'POST',
             edit: 'GET',
             update: 'PUT',
-            delete: 'DELETE'
+            delete: 'DELETE',
     ]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond roomService.list(params), model:[roomCount: roomService.count()]
+        respond roomDataService.list(params), model: [roomCount: roomDataService.count()]
     }
 
     def show(Long id) {
-        respond roomService.get(id)
+        respond roomDataService.get(id)
     }
 
     def create() {
@@ -40,9 +41,10 @@ class RoomController {
         }
 
         try {
-            roomService.save(room)
+            roomDataService.save(room)
         } catch (ValidationException e) {
-            respond room.errors, view:'create'
+            flash.error = beanMessage(e, messageSource).join(',')
+            render view: 'create'
             return
         }
 
@@ -51,7 +53,7 @@ class RoomController {
     }
 
     def edit(Long id) {
-        respond roomService.get(id)
+        respond roomDataService.get(id)
     }
 
     def update(Room room) {
@@ -61,9 +63,10 @@ class RoomController {
         }
 
         try {
-            roomService.save(room)
+            roomDataService.save(room)
         } catch (ValidationException e) {
-            respond room.errors, view:'edit'
+            flash.error = beanMessage(e, messageSource).join(',')
+            render view: 'edit'
             return
         }
 
@@ -77,7 +80,7 @@ class RoomController {
             return
         }
 
-        roomService.delete(id)
+        roomDataService.delete(id)
 
         flash.message = messageSource.getMessage('default.deleted.message', [roomMessage(), id] as Object[], 'Room deleted', request.locale)
         redirect action: 'index', method: 'GET'

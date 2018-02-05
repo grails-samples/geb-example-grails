@@ -1,35 +1,33 @@
-package com.test
+package demo
 
-import demo.RoomService
+import demo.pages.CreatePage
+import demo.pages.EditPage
+import demo.pages.ListPage
+import demo.pages.ShowPage
 import geb.spock.GebReportingSpec
 import grails.testing.mixin.integration.Integration
-import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.IgnoreIf
 import spock.lang.Stepwise
-import com.test.pages.ListPage
-import com.test.pages.CreatePage
-import com.test.pages.ShowPage
-import com.test.pages.EditPage
 
 @Integration
 @Stepwise
 @IgnoreIf({ !System.getProperty('geb.env') })
-class RoomCRUDSpec extends GebReportingSpec {
+class ExtraCRUDSpec extends GebReportingSpec {
 
 	def setup() {
 		browser.baseUrl = "http://localhost:${serverPort}/"
 	}
 
-	def "there are no rooms"() {
+	def 'there are no extras'() {
 		when:
-		go('room/index')
+		go('extra/index')
 		ListPage page = browser.page ListPage
 
 		then:
 		page.numberOfRows() == 0
 	}
 
-	def "add a room"() {
+	def 'add an extra'() {
 		given:
 		ListPage page = browser.page ListPage
 
@@ -39,28 +37,28 @@ class RoomCRUDSpec extends GebReportingSpec {
 		then:
 		at CreatePage
 	}
-	
-	def "enter the details"() {
+
+	def 'enter the extra details'() {
 		given:
 		CreatePage page = browser.page CreatePage
 
 		when:
-		page.populate('name', "Room 101")
+		page.populate('name', 'Breakfast')
 		page.save()
 
 		then:
 		at ShowPage
 	}
-	
-	def "check the entered details"() {
+
+	def 'check the entered details for the extra'() {
 		given:
 		ShowPage page = browser.page ShowPage
 
 		expect:
-		page.value('Name') == "Room 101"
+		page.value('Name') == 'Breakfast'
 	}
 
-	def "edit the details"() {
+	def 'edit the details'() {
 		given:
 		ShowPage page = browser.page ShowPage
 
@@ -69,7 +67,7 @@ class RoomCRUDSpec extends GebReportingSpec {
 
 		then:
 		EditPage editPage = at EditPage
-		editPage.populate('name', "Room101")
+		editPage.populate('name', 'English Breakfast')
 
 		when:
 		editPage.update()
@@ -77,11 +75,11 @@ class RoomCRUDSpec extends GebReportingSpec {
 		then:
 		at ShowPage
 	}
-	
-	def "check in listing"() {
+
+	def 'check extra in listing'() {
 		when:
 		ShowPage page = browser.page ShowPage
-		page.nav.select('Room List')
+		page.nav.select('Extra List')
 
 		then:
 		at ListPage
@@ -96,22 +94,21 @@ class RoomCRUDSpec extends GebReportingSpec {
 		def row = listPage.entityRow(0)
 
 		then:
-		row.cellText(0) == "Room101"
+		row.cellText(0) == 'English Breakfast'
 	}
-	
-	def "show row"() {
+
+	def 'show extra'() {
 		given:
 		ListPage page = browser.page ListPage
 
 		when:
-		page.select('Room101')
+		page.select('English Breakfast')
 
 		then:
 		at ShowPage
 	}
 
-	@IgnoreIf({ System.getProperty('geb.env') == 'htmlUnit' })
-	def "delete room"() {
+	def 'delete extra'() {
 		given:
 		ShowPage page = browser.page ShowPage
 
@@ -125,7 +122,7 @@ class RoomCRUDSpec extends GebReportingSpec {
 		ListPage listPage = browser.page ListPage
 
 		then:
-		listPage.message ==~ /Room .+ deleted/
+		listPage.message ==~ /Extra .+ deleted/
 		listPage.numberOfRows() == 0
 	}
 }
