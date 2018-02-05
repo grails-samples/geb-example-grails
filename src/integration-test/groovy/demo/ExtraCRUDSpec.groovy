@@ -84,7 +84,7 @@ class ExtraCRUDSpec extends GebReportingSpec {
 		at ListPage
 
 		when:
-		ListPage listPage = page ListPage
+		ListPage listPage = browser.page ListPage
 
 		then:
 		listPage.entityRows.size() == 1
@@ -118,7 +118,7 @@ class ExtraCRUDSpec extends GebReportingSpec {
 		at ListPage
 
 		when:
-		ListPage listPage = page ListPage
+		ListPage listPage = browser.page ListPage
 
 		then:
 		listPage.message ==~ /Extra .+ deleted/
