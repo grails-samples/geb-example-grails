@@ -28,7 +28,7 @@ class RoomCRUDSpec extends GebReportingSpec {
 
 	def 'add a room'() {
 		given:
-		ListPage page = browser.page ListPage
+		ListPage page = page ListPage
 
 		when:
 		page.newEntity()
@@ -39,7 +39,7 @@ class RoomCRUDSpec extends GebReportingSpec {
 
 	def 'enter the details'() {
 		given:
-		CreatePage page = browser.page CreatePage
+		CreatePage page = page CreatePage
 
 		when:
 		page.populate('name', 'Room 101')
@@ -51,7 +51,7 @@ class RoomCRUDSpec extends GebReportingSpec {
 
 	def 'check the entered details'() {
 		given:
-		ShowPage page = browser.page ShowPage
+		ShowPage page = page ShowPage
 
 		expect:
 		page.value('Name') == 'Room 101'
@@ -59,7 +59,7 @@ class RoomCRUDSpec extends GebReportingSpec {
 
 	def 'edit the details'() {
 		given:
-		ShowPage page = browser.page ShowPage
+		ShowPage page = page ShowPage
 
 		when:
 		page.edit()
@@ -77,14 +77,14 @@ class RoomCRUDSpec extends GebReportingSpec {
 
 	def 'check in listing'() {
 		when:
-		ShowPage page = browser.page ShowPage
+		ShowPage page = page ShowPage
 		page.nav.select('Room List')
 
 		then:
 		at ListPage
 
 		when:
-		ListPage listPage = browser.page ListPage
+		ListPage listPage = page ListPage
 
 		then:
 		listPage.entityRows.size() == 1
@@ -98,7 +98,7 @@ class RoomCRUDSpec extends GebReportingSpec {
 
 	def 'show row'() {
 		given:
-		ListPage page = browser.page ListPage
+		ListPage page = page ListPage
 
 		when:
 		page.select('Room101')
@@ -109,7 +109,7 @@ class RoomCRUDSpec extends GebReportingSpec {
 
 	def 'delete room'() {
 		given:
-		ShowPage page = browser.page ShowPage
+		ShowPage page = page ShowPage
 
 		when:
 		withConfirm { page.delete() }
@@ -118,7 +118,7 @@ class RoomCRUDSpec extends GebReportingSpec {
 		at ListPage
 
 		when:
-		ListPage listPage = browser.page ListPage
+		ListPage listPage = page ListPage
 
 		then:
 		listPage.message ==~ /Room .+ deleted/

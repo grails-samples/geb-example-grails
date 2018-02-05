@@ -57,7 +57,7 @@ class BookingCRUDSpec extends GebReportingSpec {
 
 	def 'add a booking'() {
 		given:
-		ListPage page = browser.page ListPage
+		ListPage page = page ListPage
 
 		when:
 		page.newEntity()
@@ -68,7 +68,7 @@ class BookingCRUDSpec extends GebReportingSpec {
 	
 	def 'enter the details'() {
 		given:
-		CreatePage page = browser.page CreatePage
+		CreatePage page = page CreatePage
 
 		when:
 		page.populate('name', 'Tim')
@@ -89,7 +89,7 @@ class BookingCRUDSpec extends GebReportingSpec {
 	
 	def 'check the entered details'() {
 		given:
-		ShowPage page = browser.page ShowPage
+		ShowPage page = page ShowPage
 
 		expect:
 		page.value('Name') == 'Tim'
@@ -103,7 +103,7 @@ class BookingCRUDSpec extends GebReportingSpec {
 
 	def 'edit the details'() {
 		given:
-		ShowPage page = browser.page ShowPage
+		ShowPage page = page ShowPage
 
 		when:
 		page.edit()
@@ -127,7 +127,7 @@ class BookingCRUDSpec extends GebReportingSpec {
 	
 	def 'check in listing'() {
 		when:
-		ShowPage page = browser.page ShowPage
+		ShowPage page = page ShowPage
 		page.nav.select('Home')
 
 		then:
@@ -148,7 +148,7 @@ class BookingCRUDSpec extends GebReportingSpec {
 	
 	def 'show row'() {
 		given:
-		ListPage page = browser.page ListPage
+		ListPage page = page ListPage
 
 		when:
 		page.select('Tim Cook')
@@ -164,7 +164,7 @@ class BookingCRUDSpec extends GebReportingSpec {
 
 	def "delete booking"() {
 		given:
-		ShowPage page = browser.page ShowPage
+		ShowPage page = page ShowPage
 
 		when:
 		withConfirm { page.delete() }

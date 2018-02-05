@@ -28,7 +28,7 @@ class ExtraCRUDSpec extends GebReportingSpec {
 
 	def 'add an extra'() {
 		given:
-		ListPage page = browser.page ListPage
+		ListPage page = page ListPage
 
 		when:
 		page.newEntity()
@@ -39,7 +39,7 @@ class ExtraCRUDSpec extends GebReportingSpec {
 
 	def 'enter the extra details'() {
 		given:
-		CreatePage page = browser.page CreatePage
+		CreatePage page = page CreatePage
 
 		when:
 		page.populate('name', 'Breakfast')
@@ -51,7 +51,7 @@ class ExtraCRUDSpec extends GebReportingSpec {
 
 	def 'check the entered details for the extra'() {
 		given:
-		ShowPage page = browser.page ShowPage
+		ShowPage page = page ShowPage
 
 		expect:
 		page.value('Name') == 'Breakfast'
@@ -59,7 +59,7 @@ class ExtraCRUDSpec extends GebReportingSpec {
 
 	def 'edit the details'() {
 		given:
-		ShowPage page = browser.page ShowPage
+		ShowPage page = page ShowPage
 
 		when:
 		page.edit()
@@ -77,14 +77,14 @@ class ExtraCRUDSpec extends GebReportingSpec {
 
 	def 'check extra in listing'() {
 		when:
-		ShowPage page = browser.page ShowPage
+		ShowPage page = page ShowPage
 		page.nav.select('Extra List')
 
 		then:
 		at ListPage
 
 		when:
-		ListPage listPage = browser.page ListPage
+		ListPage listPage = page ListPage
 
 		then:
 		listPage.entityRows.size() == 1
@@ -98,7 +98,7 @@ class ExtraCRUDSpec extends GebReportingSpec {
 
 	def 'show extra'() {
 		given:
-		ListPage page = browser.page ListPage
+		ListPage page = page ListPage
 
 		when:
 		page.select('English Breakfast')
@@ -109,7 +109,7 @@ class ExtraCRUDSpec extends GebReportingSpec {
 
 	def 'delete extra'() {
 		given:
-		ShowPage page = browser.page ShowPage
+		ShowPage page = page ShowPage
 
 		when:
 		withConfirm { page.delete() }
@@ -118,7 +118,7 @@ class ExtraCRUDSpec extends GebReportingSpec {
 		at ListPage
 
 		when:
-		ListPage listPage = browser.page ListPage
+		ListPage listPage = page ListPage
 
 		then:
 		listPage.message ==~ /Extra .+ deleted/
