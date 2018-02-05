@@ -6,7 +6,9 @@ import demo.pages.ListPage
 import demo.pages.ShowPage
 import geb.spock.GebReportingSpec
 import grails.testing.mixin.integration.Integration
+import grails.testing.spock.OnceBefore
 import spock.lang.IgnoreIf
+import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Integration
@@ -18,98 +20,31 @@ class BookingCRUDSpec extends GebReportingSpec {
 		browser.baseUrl = "http://localhost:${serverPort}/"
 	}
 
-	def 'create rooms'() {
-		when:
-		CreatePage page = browser.to CreatePage, 'room'
-		page.populate('name', 'Room 101')
-		page.save()
+	@Shared
+	RoomDataService roomDataService
 
-		then:
-		at ShowPage
+	@Shared
+	ExtraDataService extraDataService
 
-		when:
-		ShowPage showPage = browser.page ShowPage
-		showPage.create()
+	@Shared
+	List<Room> rooms = []
 
-		then:
-		at CreatePage
+	@Shared
+	List<Extra> extras = []
 
-		when:
-		page = browser.page CreatePage
-		page.populate('name', 'Room 102')
-		page.save()
-
-		then:
-		at ShowPage
-
-		when:
-		showPage = browser.page ShowPage
-		showPage.create()
-
-		then:
-		at CreatePage
-
-		when:
-		page = browser.page CreatePage
-		page.populate('name', 'Room 103')
-		page.save()
-
-		then:
-		at ShowPage
+	@OnceBefore
+	def populateSampleData() {
+		rooms << roomDataService.save('Room 101')
+		rooms << roomDataService.save('Room 102')
+		rooms << roomDataService.save('Room 103')
+		extras << extraDataService.save('Breakfast')
+		extras << extraDataService.save('Crib')
+		extras << extraDataService.save('Champagne')
 	}
 
-	def 'create extras'() {
-		when:
-		ShowPage showPage = browser.page ShowPage
-		showPage.nav.select('Extra List')
-
-		then:
-		at ListPage
-
-		when:
-		ListPage listPage = browser.page ListPage
-		listPage.newEntity()
-
-		then:
-		at CreatePage
-
-		when:
-		CreatePage page = browser.page CreatePage
-		page.populate('name', 'Breakfast')
-		page.save()
-
-		then:
-		at ShowPage
-
-		when:
-		showPage = browser.page ShowPage
-		showPage.create()
-
-		then:
-		at CreatePage
-
-		when:
-		page = browser.page CreatePage
-		page.populate('name', 'Crib')
-		page.save()
-
-		then:
-		at ShowPage
-
-		when:
-		showPage = browser.page ShowPage
-		showPage.create()
-
-		then:
-		at CreatePage
-
-		when:
-		page = browser.page CreatePage
-		page.populate('name', 'Champagne')
-		page.save()
-
-		then:
-		at ShowPage
+	def cleanupSpec() {
+		rooms.each { roomDataService.delete(it.id) }
+		extras.each { extraDataService.delete(it.id) }
 	}
 	
 	def 'there are no bookings'() {
@@ -245,105 +180,5 @@ class BookingCRUDSpec extends GebReportingSpec {
 		then:
 		listPage.message ==~ /Booking .+ deleted/
 		listPage.numberOfRows() == 0
-	}
-
-	def "delete rooms"() {
-		when:
-		ListPage page = browser.page ListPage
-		page.nav.select('Room List')
-
-		then:
-		at ListPage
-
-		when:
-		page.select('Room 101')
-
-		then:
-		at ShowPage
-
-		when:
-		ShowPage showPage = browser.page ShowPage
-		withConfirm { showPage.delete() }
-
-		then:
-		at ListPage
-
-		when:
-		page = browser.page ListPage
-		page.select('Room 102')
-
-		then:
-		at ShowPage
-
-		when:
-		showPage = browser.page ShowPage
-		withConfirm { showPage.delete() }
-
-		then:
-		at ListPage
-
-		when:
-		page = browser.page ListPage
-		page.select('Room 103')
-
-		then:
-		at ShowPage
-
-		when:
-		showPage = browser.page ShowPage
-		withConfirm { showPage.delete() }
-
-		then:
-		at ListPage
-	}
-
-	def "delete extras"() {
-		when:
-		ListPage page = browser.page ListPage
-		page.nav.select('Extra List')
-
-		then:
-		at ListPage
-
-		when:
-		page.select('Breakfast')
-
-		then:
-		at ShowPage
-
-		when:
-		ShowPage showPage = browser.page ShowPage
-		withConfirm { showPage.delete() }
-
-		then:
-		at ListPage
-
-		when:
-		page = browser.page ListPage
-		page.select('Crib')
-
-		then:
-		at ShowPage
-
-		when:
-		showPage = browser.page ShowPage
-		withConfirm { showPage.delete() }
-
-		then:
-		at ListPage
-
-		when:
-		page = browser.page ListPage
-		page.select('Champagne')
-
-		then:
-		at ShowPage
-
-		when:
-		showPage = browser.page ShowPage
-		withConfirm { showPage.delete() }
-
-		then:
-		at ListPage
 	}
 }
