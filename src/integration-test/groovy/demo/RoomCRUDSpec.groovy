@@ -14,10 +14,6 @@ import spock.lang.Stepwise
 @IgnoreIf({ !System.getProperty('geb.env') })
 class RoomCRUDSpec extends GebReportingSpec {
 
-	def setup() {
-		browser.baseUrl = "http://localhost:${serverPort}/"
-	}
-
 	def 'there are no rooms'() {
 		when:
 		ListPage page = to ListPage, 'room'

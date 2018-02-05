@@ -16,10 +16,6 @@ import spock.lang.Stepwise
 @IgnoreIf({ !System.getProperty('geb.env') })
 class BookingCRUDSpec extends GebReportingSpec {
 
-	def setup() {
-		browser.baseUrl = "http://localhost:${serverPort}/"
-	}
-
 	@Shared
 	RoomDataService roomDataService
 

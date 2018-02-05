@@ -14,10 +14,6 @@ import spock.lang.Stepwise
 @IgnoreIf({ !System.getProperty('geb.env') })
 class ExtraCRUDSpec extends GebReportingSpec {
 
-	def setup() {
-		browser.baseUrl = "http://localhost:${serverPort}/"
-	}
-
 	def 'there are no extras'() {
 		when:
 		ListPage page = to ListPage, 'extra'
