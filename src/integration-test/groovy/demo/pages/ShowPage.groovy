@@ -5,6 +5,12 @@ class ShowPage extends ScaffoldPage {
 	static at = {
 		heading.text() ==~ /Show .+/
 	}
+
+	static url = "/"
+
+	String convertToPath(Object[] args) {
+		(args && args.size() >= 2) ? "${args[0]}/${args[1]}" : ""
+	}
 	
 	static content = {
 		newEntityButton(to: CreatePage) { $('a', text: contains('New')) }

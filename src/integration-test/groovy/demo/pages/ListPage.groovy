@@ -6,6 +6,12 @@ class ListPage extends ScaffoldPage {
 	static at = {
 		title ==~ /.+ List/
 	}
+
+	static url = "/"
+
+	String convertToPath(Object[] args) {
+		args ? "${args[0]}/index" : ""
+	}
 	
 	static content = {
 		newEntityButton(to: CreatePage) { $('a', text: contains('New')) }

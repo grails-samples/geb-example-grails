@@ -8,7 +8,13 @@ class CreatePage extends ScaffoldPage {
 	static at = {
 		title ==~ /Create.+/
 	}
-	
+
+	static url = "/"
+
+	String convertToPath(Object[] args) {
+		args ? "${args[0]}/create" : ""
+	}
+
 	static content = {
 		inputField { $('input', name: it).module(TextInput) }
 		emailField { $('input', type: 'email', name: it) }

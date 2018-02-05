@@ -20,13 +20,7 @@ class BookingCRUDSpec extends GebReportingSpec {
 
 	def 'create rooms'() {
 		when:
-		go('room/create')
-
-		then:
-		at CreatePage
-
-		when:
-		CreatePage page = browser.page CreatePage
+		CreatePage page = browser.to CreatePage, 'room'
 		page.populate('name', 'Room 101')
 		page.save()
 

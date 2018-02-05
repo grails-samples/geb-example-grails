@@ -8,6 +8,12 @@ class EditPage extends ScaffoldPage {
 	static at = {
 		heading.text() ==~ /Edit.+/
 	}
+
+	static url = "/"
+
+	String convertToPath(Object[] args) {
+		args ? "${args[0]}/edit" : ""
+	}
 	
 	static content = {
 		inputField { $('input', name: it).module(TextInput) }

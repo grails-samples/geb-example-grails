@@ -20,8 +20,7 @@ class ExtraCRUDSpec extends GebReportingSpec {
 
 	def 'there are no extras'() {
 		when:
-		go('extra/index')
-		ListPage page = browser.page ListPage
+		ListPage page = browser.to ListPage, 'extra'
 
 		then:
 		page.numberOfRows() == 0
