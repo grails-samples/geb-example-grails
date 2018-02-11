@@ -173,7 +173,7 @@ class ExtraControllerSpec extends Specification implements ControllerUnitTest<Ex
         when: 'The save action is executed with an invalid instance'
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'PUT'
-        params.id = 1L
+        params.id = 1
         params.name = 'Room 102'
         controller.update()
 
