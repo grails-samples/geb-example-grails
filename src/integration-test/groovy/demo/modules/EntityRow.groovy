@@ -1,6 +1,5 @@
 package demo.modules
 
-import demo.pages.booking.BookingShowPage
 import geb.Module
 
 class EntityRow  extends Module {

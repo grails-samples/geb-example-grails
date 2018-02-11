@@ -9,10 +9,10 @@ class BookingShowPage extends Page {
 		title == 'Show Booking'
 	}
 
-	static url = "/booking/show"
+	static url = '/booking/show'
 
 	String convertToPath(Object[] args) {
-		args ? "/${args[0]}" : ""
+		args ? "/${args[0]}" : ''
 	}
 
 	static content = {
@@ -21,7 +21,6 @@ class BookingShowPage extends Page {
 		buttons { $('fieldset.buttons').module(CreateEditDeleteModule) }
 		nav { $('div.nav').module(Nav) }
 	}
-
 
 	String getName() {
 		value('Name')

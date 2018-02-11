@@ -9,10 +9,10 @@ class ShowRoomPage extends Page {
         title == 'Show Room'
     }
 
-    static url = "/room/show"
+    static url = '/room/show'
 
     String convertToPath(Object[] args) {
-        args ? "/${args[0]}" : ""
+        args ? "/${args[0]}" : ''
     }
 
     static content = {

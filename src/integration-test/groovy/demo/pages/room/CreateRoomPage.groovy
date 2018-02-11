@@ -11,7 +11,7 @@ class CreateRoomPage extends Page {
         title == 'Create Room'
     }
 
-    static url = "/room/create"
+    static url = '/room/create'
 
     static content = {
         inputField {

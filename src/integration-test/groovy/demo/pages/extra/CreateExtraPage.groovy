@@ -1,6 +1,5 @@
 package demo.pages.extra
 
-import demo.pages.booking.BookingShowPage
 import geb.Page
 import geb.module.TextInput
 
@@ -10,7 +9,7 @@ class CreateExtraPage extends Page {
         title == 'Create Extra'
     }
 
-    static url = "/extra/create"
+    static url = '/extra/create'
 
     static content = {
         inputField { $('input', name: it).module(TextInput) }

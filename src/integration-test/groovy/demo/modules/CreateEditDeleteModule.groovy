@@ -1,7 +1,5 @@
 package demo.modules
 
-import demo.pages.booking.CreateBookingPage
-import demo.pages.booking.BookingEditPage
 import geb.Module
 
 class CreateEditDeleteModule extends Module {

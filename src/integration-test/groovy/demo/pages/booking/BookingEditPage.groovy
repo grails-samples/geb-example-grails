@@ -14,7 +14,7 @@ class BookingEditPage extends Page {
 	static url = '/booking/edit'
 
 	String convertToPath(Object[] args) {
-		args ? "/${args[0]}" : ""
+		args ? "/${args[0]}" : ''
 	}
 
 	static content = {

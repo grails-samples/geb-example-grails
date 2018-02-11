@@ -1,7 +1,6 @@
 package demo.pages.booking
 
 import demo.modules.CreateModule
-import demo.modules.EntityRow
 import demo.modules.Nav
 import demo.modules.TableModule
 import geb.Page

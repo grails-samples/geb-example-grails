@@ -1,6 +1,5 @@
 package demo.modules
 
-import demo.pages.booking.CreateBookingPage
 import geb.Module
 
 class CreateModule extends Module {

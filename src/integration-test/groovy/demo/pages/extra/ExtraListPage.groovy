@@ -1,9 +1,8 @@
 package demo.pages.extra
 
 import demo.modules.CreateModule
-import demo.modules.TableModule
-import demo.pages.booking.CreateBookingPage
 import demo.modules.Nav
+import demo.modules.TableModule
 import geb.Page
 
 class ExtraListPage extends Page {

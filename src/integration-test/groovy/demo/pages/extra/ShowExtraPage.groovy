@@ -9,7 +9,7 @@ class ShowExtraPage extends Page {
         title == 'Show Extra'
     }
 
-    static url = "/extra/show"
+    static url = '/extra/show'
 
     String convertToPath(Object[] args) {
         args ? "/${args[0]}" : ""

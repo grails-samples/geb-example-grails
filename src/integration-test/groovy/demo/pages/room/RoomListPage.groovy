@@ -2,7 +2,6 @@ package demo.pages.room
 
 import demo.modules.CreateModule
 import demo.modules.TableModule
-import demo.pages.booking.CreateBookingPage
 import demo.modules.Nav
 import geb.Page
 
@@ -24,5 +23,4 @@ class RoomListPage extends Page {
     String roomAt(int row) {
         table.textAt(0, 0)
     }
-
 }
