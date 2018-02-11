@@ -69,15 +69,16 @@ dependencies {
     testCompile "org.seleniumhq.selenium:selenium-support:3.6.0"
 }
 
+webdriverBinaries {
+    chromedriver '2.34'
+    geckodriver '0.18.0'
+}
+
 bootRun {
     jvmArgs('-Dspring.output.ansi.enabled=always')
     addResources = true
 }
 
-webdriverBinaries {
-    chromedriver '2.34'
-    geckodriver '0.18.0'
-}
 
 tasks.withType(Test) {
     systemProperty "geb.env", System.getProperty('geb.env')
