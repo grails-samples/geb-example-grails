@@ -15,7 +15,6 @@ class RoomListPage extends Page {
     }
 
     static content = {
-        newEntityButton(to: CreateBookingPage) { $('a', text: contains('New')) }
         table { $('div.content', 0).module(TableModule) }
         buttons { $('fieldset.buttons').module(CreateModule) }
         nav { $('div.nav').module(Nav) }

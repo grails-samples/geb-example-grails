@@ -5,7 +5,7 @@ import geb.Module
 
 class CreateModule extends Module {
     static content = {
-        newEntityButton(to: CreateBookingPage) { $('a', text: contains('New')) }
+        newEntityButton { $('a', text: contains('New')) }
     }
 
     void create() {

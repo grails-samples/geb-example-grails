@@ -17,7 +17,7 @@ class CreateRoomPage extends Page {
         inputField {
             $('input', name: it).module(TextInput)
         }
-        saveButton(to: BookingShowPage) {
+        saveButton {
             $('input', type: 'submit')
         }
         nav { $('div.nav').module(Nav) }

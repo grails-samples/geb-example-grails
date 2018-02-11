@@ -8,6 +8,6 @@ class EntityRow  extends Module {
         cell { $('td', it) }
         cellText { cell(it).text() }
         cellHrefText { cell(it).find('a').text() }
-        showLink(to: BookingShowPage) { cell(0).find('a') }
+        showLink { cell(0).find('a') }
     }
 }

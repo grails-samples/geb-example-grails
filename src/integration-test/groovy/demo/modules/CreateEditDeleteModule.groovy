@@ -6,8 +6,8 @@ import geb.Module
 
 class CreateEditDeleteModule extends Module {
     static content = {
-        newEntityButton(to: CreateBookingPage) { $('a', text: contains('New')) }
-        editButton(to: BookingEditPage) { $('a', text: 'Edit') }
+        newEntityButton { $('a', text: contains('New')) }
+        editButton { $('a', text: 'Edit') }
         deleteButton { $('input', value: 'Delete') }
     }
 

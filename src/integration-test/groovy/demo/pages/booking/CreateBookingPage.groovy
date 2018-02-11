@@ -16,7 +16,7 @@ class CreateBookingPage extends Page {
 		inputField { $('input', name: it).module(TextInput) }
 		emailField { $('input', type: 'email', name: it) }
 		numberField { $('input', type: 'number', name: it) }
-		saveButton(to: BookingShowPage) { $('input', type: 'submit') }
+		saveButton { $('input', type: 'submit') }
 		selectDay { $('select', name: "${it}_day") }
 		selectMonth { $('select', name: "${it}_month") }
 		selectYear { $('select', name: "${it}_year") }

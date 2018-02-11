@@ -6,8 +6,8 @@ import geb.Module
 
 class UpdateDeleteModule extends Module {
     static content = {
-        updateButton(to: BookingShowPage) { $('input', value: 'Update') }
-        deleteButton(to: BookingListPage) { $('input', value: 'Delete') }
+        updateButton { $('input', value: 'Update') }
+        deleteButton { $('input', value: 'Delete') }
     }
 
     void update() {

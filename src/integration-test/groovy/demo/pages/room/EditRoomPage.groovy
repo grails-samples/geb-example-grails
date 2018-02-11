@@ -6,9 +6,7 @@ import geb.module.TextInput
 
 class EditRoomPage extends Page {
 
-    static at = {
-        title == 'Edit Room'
-    }
+    static at = { title == 'Edit Room' }
 
     static url = '/room/edit'
 

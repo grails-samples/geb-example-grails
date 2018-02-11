@@ -14,7 +14,7 @@ class CreateExtraPage extends Page {
 
     static content = {
         inputField { $('input', name: it).module(TextInput) }
-        saveButton(to: BookingShowPage) { $('input', type: 'submit') }
+        saveButton { $('input', type: 'submit') }
     }
 
     void setName(String name) {
