@@ -1,9 +1,9 @@
 package demo
 
-import demo.pages.CreatePage
-import demo.pages.EditPage
-import demo.pages.ListPage
-import demo.pages.ShowPage
+import demo.pages.booking.CreateBookingPage
+import demo.pages.booking.BookingEditPage
+import demo.pages.booking.BookingListPage
+import demo.pages.booking.BookingShowPage
 import geb.spock.GebReportingSpec
 import grails.testing.mixin.integration.Integration
 import grails.testing.spock.OnceBefore
@@ -45,33 +45,33 @@ class BookingCRUDSpec extends GebReportingSpec {
 	
 	def 'there are no bookings'() {
 		when:
-		ListPage page = to ListPage, 'booking'
+		BookingListPage page = to BookingListPage
 
 		then:
-		page.numberOfRows() == 0
+		page.table.numberOfRows() == 0
 	}
 
 	def 'add a booking'() {
 		given:
-		ListPage page = page ListPage
+		BookingListPage page = page BookingListPage
 
 		when:
-		page.newEntity()
+		page.buttons.create()
 
 		then:
-		at CreatePage
+		at CreateBookingPage
 	}
 	
 	def 'enter the details'() {
 		given:
-		CreatePage page = page CreatePage
+		CreateBookingPage page = page CreateBookingPage
 
 		when:
-		page.populate('name', 'Tim')
-		page.populateNumber('adults', 2)
-		page.populateEmail('email', 'tim@apple.com')
-		page.populateDate('arrival', 30, 12, 2017)
-		page.populateDate('departure', 31, 12, 2017)
+		page.name = 'Tim'
+		page.adults = 2
+		page.email = 'tim@apple.com'
+		page.setArrival(30, 12, 2017)
+		page.setDeparture(31, 12, 2017)
 
 		page.check('Room 101')
 		page.check('Room 102')
@@ -80,99 +80,96 @@ class BookingCRUDSpec extends GebReportingSpec {
 		page.save()
 
 		then:
-		at ShowPage
+		at BookingShowPage
 	}
 	
 	def 'check the entered details'() {
 		given:
-		ShowPage page = page ShowPage
+		BookingShowPage page = page BookingShowPage
 
 		expect:
-		page.value('Name') == 'Tim'
-		page.value('Adults') == '2'
-		page.value('Email') == 'tim@apple.com'
-		page.value('Arrival').startsWith('2017-12-30')
-		page.value('Departure').startsWith('2017-12-31')
-		page.value('Rooms') == 'Room 101,Room 102'
-		page.value('Extras') == 'Breakfast'
+		page.name == 'Tim'
+		page.adults == '2'
+		page.email == 'tim@apple.com'
+		page.arrival.startsWith('2017-12-30')
+		page.departure.startsWith('2017-12-31')
+		page.rooms == 'Room 101,Room 102'
+		page.extras == 'Breakfast'
 	}
 
 	def 'edit the details'() {
 		given:
-		ShowPage page = page ShowPage
+		BookingShowPage page = page BookingShowPage
 
 		when:
-		page.edit()
+		page.buttons.edit()
 
 		then:
-		EditPage editPage = at EditPage
-		editPage.populate('name', 'Tim Cook')
+		BookingEditPage editPage = at BookingEditPage
 
+		when:
+		editPage.name = 'Tim Cook'
 		editPage.uncheck('Room 102')
 		editPage.check('Room 103')
-
 		editPage.check('Champagne')
-
-
-		when:
-		editPage.update()
+		editPage.buttons.update()
 
 		then:
-		at ShowPage
+		at BookingShowPage
 	}
 	
 	def 'check in listing'() {
 		when:
-		ShowPage page = page ShowPage
-		page.nav.select('Home')
+		BookingShowPage page = page BookingShowPage
+		page.nav.home()
 
 		then:
-		at ListPage
+		at BookingListPage
 
 		when:
-		ListPage listPage = browser.page ListPage
+		BookingListPage listPage = browser.page BookingListPage
 
 		then:
-		listPage.entityRows.size() == 1
+		listPage.table.numberOfRows() == 1
 
 		when:
-		def row = listPage.entityRow(0)
+		String value = listPage.table.textAt(0, 0)
 
 		then:
-		row.cellText(0) == 'Tim Cook'
+		value == 'Tim Cook'
 	}
 	
 	def 'show row'() {
 		given:
-		ListPage page = page ListPage
+		BookingListPage page = page BookingListPage
 
 		when:
-		page.select('Tim Cook')
+		page.table.select('Tim Cook')
 
 		then:
-		at ShowPage
+		at BookingShowPage
 
 		and:
-		ShowPage showPage = browser.page ShowPage
-		showPage.value('Rooms') == 'Room 101,Room 103'
-		showPage.value('Extras') == 'Breakfast,Champagne'
+		BookingShowPage showPage = browser.page BookingShowPage
+		showPage.rooms == 'Room 101,Room 103'
+		showPage.extras == 'Breakfast,Champagne'
 	}
 
 	def "delete booking"() {
 		given:
-		ShowPage page = page ShowPage
+		BookingShowPage page = page BookingShowPage
 
 		when:
-		withConfirm { page.delete() }
+		withConfirm { page.buttons.delete() }
 
 		then:
-		at ListPage
+		at BookingListPage
 
 		when:
-		ListPage listPage = browser.page ListPage
+		BookingListPage listPage = browser.page BookingListPage
 
 		then:
 		listPage.message ==~ /Booking .+ deleted/
-		listPage.numberOfRows() == 0
+		listPage.table.numberOfRows() == 0
 	}
 }

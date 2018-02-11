@@ -1,25 +1,22 @@
-package demo.pages
+package demo.pages.booking
 
+import geb.Page
 import geb.module.Checkbox
 import geb.module.TextInput
 
-class CreatePage extends ScaffoldPage {
+class CreateBookingPage extends Page {
 
 	static at = {
-		title ==~ /Create.+/
+		title == 'Create Booking'
 	}
 
-	static url = "/"
-
-	String convertToPath(Object[] args) {
-		args ? "${args[0]}/create" : ""
-	}
+	static url = "/booking/create"
 
 	static content = {
 		inputField { $('input', name: it).module(TextInput) }
 		emailField { $('input', type: 'email', name: it) }
 		numberField { $('input', type: 'number', name: it) }
-		saveButton(to: ShowPage) { $('input', type: 'submit') }
+		saveButton(to: BookingShowPage) { $('input', type: 'submit') }
 		selectDay { $('select', name: "${it}_day") }
 		selectMonth { $('select', name: "${it}_month") }
 		selectYear { $('select', name: "${it}_year") }
@@ -55,5 +52,25 @@ class CreatePage extends ScaffoldPage {
 
 	void save() {
 		saveButton.click()
+	}
+
+	void setName(String name) {
+		populate('name', name)
+	}
+
+	void setAdults(int adults) {
+		populateNumber('adults', adults)
+	}
+
+	void setEmail(String email) {
+		populateEmail('email', email)
+	}
+
+	void setArrival(int day, int month, int year) {
+		populateDate('arrival', day, month, year)
+	}
+
+	void setDeparture(int day, int month, int year) {
+		populateDate('departure', day, month, year)
 	}
 }

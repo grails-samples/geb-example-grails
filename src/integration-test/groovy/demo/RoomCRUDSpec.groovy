@@ -1,9 +1,9 @@
 package demo
 
-import demo.pages.CreatePage
-import demo.pages.EditPage
-import demo.pages.ListPage
-import demo.pages.ShowPage
+import demo.pages.room.CreateRoomPage
+import demo.pages.room.EditRoomPage
+import demo.pages.room.RoomListPage
+import demo.pages.room.ShowRoomPage
 import geb.spock.GebReportingSpec
 import grails.testing.mixin.integration.Integration
 import spock.lang.IgnoreIf
@@ -16,108 +16,108 @@ class RoomCRUDSpec extends GebReportingSpec {
 
 	def 'there are no rooms'() {
 		when:
-		ListPage page = to ListPage, 'room'
+		RoomListPage page = to RoomListPage
 
 		then:
-		page.numberOfRows() == 0
+		page.table.numberOfRows() == 0
 	}
 
 	def 'add a room'() {
 		given:
-		ListPage page = page ListPage
+		RoomListPage page = page RoomListPage
 
 		when:
-		page.newEntity()
+		page.buttons.create()
 
 		then:
-		at CreatePage
+		at CreateRoomPage
 	}
 
 	def 'enter the details'() {
 		given:
-		CreatePage page = page CreatePage
+		CreateRoomPage page = page CreateRoomPage
 
 		when:
-		page.populate('name', 'Room 101')
+		page.name = 'Room 101'
 		page.save()
 
 		then:
-		at ShowPage
+		at ShowRoomPage
 	}
 
 	def 'check the entered details'() {
 		given:
-		ShowPage page = page ShowPage
+		ShowRoomPage page = page ShowRoomPage
 
 		expect:
-		page.value('Name') == 'Room 101'
+		page.name == 'Room 101'
 	}
 
 	def 'edit the details'() {
 		given:
-		ShowPage page = page ShowPage
+		ShowRoomPage page = page ShowRoomPage
 
 		when:
-		page.edit()
+		page.buttons.edit()
 
 		then:
-		EditPage editPage = at EditPage
-		editPage.populate('name', 'Room101')
+		EditRoomPage editPage = at EditRoomPage
 
 		when:
-		editPage.update()
+		editPage.name = 'Room101'
+		editPage.buttons.update()
 
 		then:
-		at ShowPage
+		at ShowRoomPage
 	}
 
 	def 'check in listing'() {
 		when:
-		ShowPage page = page ShowPage
-		page.nav.select('Room List')
-
+		ShowRoomPage page = page ShowRoomPage
+		page.nav.rooms()
+		
 		then:
-		at ListPage
+		at RoomListPage
 
 		when:
-		ListPage listPage = browser.page ListPage
+		RoomListPage listPage = browser.page RoomListPage
 
 		then:
-		listPage.entityRows.size() == 1
+		listPage.table.numberOfRows() == 1
 
 		when:
-		def row = listPage.entityRow(0)
+		String name = listPage.roomAt(0)
 
 		then:
-		row.cellText(0) == 'Room101'
+		name == 'Room101'
 	}
 
 	def 'show row'() {
 		given:
-		ListPage page = page ListPage
+		RoomListPage page = page RoomListPage
 
 		when:
-		page.select('Room101')
+		page.table.select('Room101')
 
 		then:
-		at ShowPage
+		at ShowRoomPage
 	}
 
 	def 'delete room'() {
 		given:
-		ShowPage page = page ShowPage
+		ShowRoomPage page = page ShowRoomPage
 
 		when:
-		withConfirm { page.delete() }
+		withConfirm { page.buttons.delete() }
 
 		then:
-		at ListPage
+		at RoomListPage
 
 		when:
-		ListPage listPage = browser.page ListPage
+		RoomListPage listPage = browser.page RoomListPage
 
 		then:
 		listPage.message ==~ /Room .+ deleted/
-		listPage.numberOfRows() == 0
+		listPage.table.numberOfRows() == 0
 	}
 }

@@ -1,5 +1,6 @@
-package demo.pages
+package demo.modules
 
+import demo.pages.booking.BookingShowPage
 import geb.Module
 
 class EntityRow  extends Module {
@@ -7,6 +8,6 @@ class EntityRow  extends Module {
         cell { $('td', it) }
         cellText { cell(it).text() }
         cellHrefText { cell(it).find('a').text() }
-        showLink(to: ShowPage) { cell(0).find('a') }
+        showLink(to: BookingShowPage) { cell(0).find('a') }
     }
 }

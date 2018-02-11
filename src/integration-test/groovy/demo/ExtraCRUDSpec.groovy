@@ -1,9 +1,9 @@
 package demo
 
-import demo.pages.CreatePage
-import demo.pages.EditPage
-import demo.pages.ListPage
-import demo.pages.ShowPage
+import demo.pages.extra.CreateExtraPage
+import demo.pages.extra.EditExtraPage
+import demo.pages.extra.ExtraListPage
+import demo.pages.extra.ShowExtraPage
 import geb.spock.GebReportingSpec
 import grails.testing.mixin.integration.Integration
 import spock.lang.IgnoreIf
@@ -16,108 +16,108 @@ class ExtraCRUDSpec extends GebReportingSpec {
 
 	def 'there are no extras'() {
 		when:
-		ListPage page = to ListPage, 'extra'
+		ExtraListPage page = to ExtraListPage
 
 		then:
-		page.numberOfRows() == 0
+		page.table.numberOfRows() == 0
 	}
 
 	def 'add an extra'() {
 		given:
-		ListPage page = page ListPage
+		ExtraListPage page = page ExtraListPage
 
 		when:
-		page.newEntity()
+		page.buttons.create()
 
 		then:
-		at CreatePage
+		at CreateExtraPage
 	}
 
 	def 'enter the extra details'() {
 		given:
-		CreatePage page = page CreatePage
+		CreateExtraPage page = page CreateExtraPage
 
 		when:
-		page.populate('name', 'Breakfast')
+		page.name = 'Breakfast'
 		page.save()
 
 		then:
-		at ShowPage
+		at ShowExtraPage
 	}
 
 	def 'check the entered details for the extra'() {
 		given:
-		ShowPage page = page ShowPage
+		ShowExtraPage page = page ShowExtraPage
 
 		expect:
-		page.value('Name') == 'Breakfast'
+		page.name == 'Breakfast'
 	}
 
 	def 'edit the details'() {
 		given:
-		ShowPage page = page ShowPage
+		ShowExtraPage page = page ShowExtraPage
 
 		when:
-		page.edit()
+		page.buttons.edit()
 
 		then:
-		EditPage editPage = at EditPage
-		editPage.populate('name', 'English Breakfast')
+		EditExtraPage editPage = at EditExtraPage
 
 		when:
-		editPage.update()
+		editPage.name = 'English Breakfast'
+		editPage.buttons.update()
 
 		then:
-		at ShowPage
+		at ShowExtraPage
 	}
 
 	def 'check extra in listing'() {
 		when:
-		ShowPage page = page ShowPage
-		page.nav.select('Extra List')
+		ShowExtraPage page = page ShowExtraPage
+		page.nav.extras()
 
 		then:
-		at ListPage
+		at ExtraListPage
 
 		when:
-		ListPage listPage = browser.page ListPage
+		ExtraListPage listPage = browser.page ExtraListPage
 
 		then:
-		listPage.entityRows.size() == 1
+		listPage.table.numberOfRows() == 1
 
 		when:
-		def row = listPage.entityRow(0)
+		String name = listPage.extraAt(0)
 
 		then:
-		row.cellText(0) == 'English Breakfast'
+		name == 'English Breakfast'
 	}
 
 	def 'show extra'() {
 		given:
-		ListPage page = page ListPage
+		ExtraListPage page = page ExtraListPage
 
 		when:
-		page.select('English Breakfast')
+		page.table.select('English Breakfast')
 
 		then:
-		at ShowPage
+		at ShowExtraPage
 	}
 
 	def 'delete extra'() {
 		given:
-		ShowPage page = page ShowPage
+		ShowExtraPage page = page ShowExtraPage
 
 		when:
-		withConfirm { page.delete() }
+		withConfirm { page.buttons.delete() }
 
 		then:
-		at ListPage
+		at ExtraListPage
 
 		when:
-		ListPage listPage = browser.page ListPage
+		ExtraListPage listPage = browser.page ExtraListPage
 
 		then:
 		listPage.message ==~ /Extra .+ deleted/
-		listPage.numberOfRows() == 0
+		listPage.table.numberOfRows() == 0
 	}
 }

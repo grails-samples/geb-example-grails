@@ -1,24 +1,25 @@
-package demo.pages
+package demo.pages.booking
 
+import demo.modules.UpdateDeleteModule
+import geb.Page
 import geb.module.Checkbox
 import geb.module.TextInput
 
-class EditPage extends ScaffoldPage {
+class BookingEditPage extends Page {
 
 	static at = {
-		heading.text() ==~ /Edit.+/
+		title == 'Edit Booking'
 	}
 
-	static url = "/"
+	static url = '/booking/edit'
 
 	String convertToPath(Object[] args) {
-		args ? "${args[0]}/edit" : ""
+		args ? "/${args[0]}" : ""
 	}
-	
+
 	static content = {
 		inputField { $('input', name: it).module(TextInput) }
-		updateButton(to: ShowPage) { $('input', value: 'Update') }
-		deleteButton(to: ListPage) { $('input', value: 'Delete') }
+		buttons { $('fieldset.buttons').module(UpdateDeleteModule) }
 		field { $('li.fieldcontain .property-label', text: it).parent() }
 		fieldCheckbox { field(it).find('input', type: 'checkbox', 0).module(Checkbox) }
 	}
@@ -31,11 +32,11 @@ class EditPage extends ScaffoldPage {
 		fieldCheckbox(name).uncheck()
 	}
 
-    void update() {
-		updateButton.click()
-	}
-
 	void populate(String inputFieldName, String value) {
 		inputField(inputFieldName).text = value
+	}
+
+	void setName(String name) {
+		populate('name', name)
 	}
 }
