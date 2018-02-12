@@ -11,6 +11,8 @@ import spock.lang.IgnoreIf
 import spock.lang.Shared
 import spock.lang.Stepwise
 
+import java.time.LocalDate
+
 @Integration
 @Stepwise
 @IgnoreIf({ !System.getProperty('geb.env') })
@@ -70,8 +72,8 @@ class BookingCRUDSpec extends GebReportingSpec {
 		page.name = 'Tim'
 		page.adults = 2
 		page.email = 'tim@apple.com'
-		page.setArrival(30, 12, 2017)
-		page.setDeparture(31, 12, 2017)
+		page.arrival = LocalDate.of(2017, 12, 30)
+		page.departure = LocalDate.of(2017, 12, 31)
 
 		page.check('Room 101')
 		page.check('Room 102')

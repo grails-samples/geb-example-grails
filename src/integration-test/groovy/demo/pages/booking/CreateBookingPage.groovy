@@ -4,6 +4,8 @@ import geb.Page
 import geb.module.Checkbox
 import geb.module.TextInput
 
+import java.time.LocalDate
+
 class CreateBookingPage extends Page {
 
 	static at = {
@@ -66,11 +68,11 @@ class CreateBookingPage extends Page {
 		populateEmail('email', email)
 	}
 
-	void setArrival(int day, int month, int year) {
-		populateDate('arrival', day, month, year)
+	void setArrival(LocalDate arrival) {
+		populateDate('arrival', arrival.day, arrival.month.value, arrival.year)
 	}
 
-	void setDeparture(int day, int month, int year) {
-		populateDate('departure', day, month, year)
+	void setDeparture(LocalDate departure) {
+		populateDate('departure', departure.day, departure.month.value, departure.year)
 	}
 }
