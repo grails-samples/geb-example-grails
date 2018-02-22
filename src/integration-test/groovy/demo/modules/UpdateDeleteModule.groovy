@@ -1,7 +1,5 @@
 package demo.modules
 
-import demo.pages.booking.BookingListPage
-import demo.pages.booking.BookingShowPage
 import geb.Module
 
 class UpdateDeleteModule extends Module {
