@@ -1,7 +1,6 @@
 package demo.pages.room
 
 import demo.modules.Nav
-import demo.pages.booking.BookingShowPage
 import geb.Page
 import geb.module.TextInput
 
