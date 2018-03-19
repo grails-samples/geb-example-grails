@@ -5,8 +5,6 @@
 
 [![OCI Webinar: Browser Automation with Geb and Grails](https://img.youtube.com/vi/E7zjib3wrxk/0.jpg)](https://www.youtube.com/watch?v=E7zjib3wrxk)
 
-[]https://www.youtube.com/watch?v=E7zjib3wrxk
-
 This repositories contains a Grails 3 application which uses WebDriver 3.x and Geb 2.x. Both JDK8 only. Check [Branch geb-1.1.1](https://github.com/grails-samples/geb-example-grails/tree/geb-1.1.1) for an example of Grails 3 in combination with Geb 1.1.1, Web Driver 2.4.x JDK7 compatible. 
 
 The Spock tests [RoomCRUDSpec](https://github.com/grails-samples/geb-example-grails/blob/master/src/integration-test/groovy/com/test/RoomCRUDSpec.groovy#L17),
