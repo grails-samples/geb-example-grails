@@ -97,7 +97,7 @@ dataSource:
     driverClassName: org.h2.Driver
     username: sa
     password: ''
-
+    logSql: true
 environments:
     development:
         dataSource:
