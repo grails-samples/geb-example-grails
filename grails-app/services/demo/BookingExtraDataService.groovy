@@ -2,7 +2,6 @@ package demo
 
 import grails.gorm.services.Query
 import grails.gorm.services.Service
-import grails.gorm.services.Where
 import groovy.transform.CompileStatic
 
 @SuppressWarnings('ComparisonWithSelf')
@@ -15,9 +14,22 @@ interface BookingExtraDataService {
 
     Number delete(Serializable id)
 
-    List<Extra> findBookingExtraExtra(Booking booking)
-    @Where({ booking == b })
-    Number delete(Booking b)
+    @Query("""
+select $extra.name 
+from ${BookingExtra bookingExtra}
+inner join ${Extra extra = bookingExtra.extra}  
+inner join ${Booking b = bookingExtra.booking}  
+where $b = $booking""")
+    List<String> findExtraNameByBooking(Booking booking)
+
+    @Query("""
+select $extra 
+from ${BookingExtra bookingExtra}
+inner join ${Extra extra = bookingExtra.booking}  
+inner join ${Booking b = bookingExtra.booking}  
+where $b = $booking""")
+    List<Extra> findExtraByBooking(Booking booking)
+
     @Query("""
 select $bookingExtra.id 
 from ${BookingExtra bookingExtra} 

@@ -1,7 +1,6 @@
 package demo
 
 import grails.validation.ValidationException
-import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import org.springframework.context.MessageSource
 
@@ -37,8 +36,8 @@ class BookingController implements BeanMessage {
             notFound()
             return
         }
-        List<Extra> extraList = bookingExtraDataService.findBookingExtraExtra(booking)
-        List<Room> roomList = bookingRoomDataService.findBookingRoomRoom(booking)
+        List<String> extraList = bookingExtraDataService.findExtraNameByBooking(booking)
+        List<String> roomList = bookingRoomDataService.findBookingRoomNameByBooking(booking)
         [booking: booking, roomList: roomList, extraList: extraList]
     }
 
@@ -85,8 +84,8 @@ class BookingController implements BeanMessage {
         List<Room> roomList = roomDataService.list([:])
         List<Extra> extraList = extraDataService.list([:])
 
-        List<Extra> bookingExtraList = bookingExtraDataService.findBookingExtraExtra(booking)
-        List<Room> bookingRoomList = bookingRoomDataService.findBookingRoomRoom(booking)
+        List<Extra> bookingExtraList = bookingExtraDataService.findExtraByBooking(booking)
+        List<Room> bookingRoomList = bookingRoomDataService.findRoomByBooking(booking)
         [
                 booking: booking,
                 roomList: roomList,
