@@ -1,6 +1,7 @@
 package demo
 
 import grails.validation.ValidationException
+import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import org.springframework.context.MessageSource
 
@@ -44,6 +45,11 @@ class BookingController implements BeanMessage {
     def create() {
         List<Room> roomList = roomDataService.list([:])
         List<Extra> extraList = extraDataService.list([:])
+        if (!roomList) {
+            flash.message = messageSource.getMessage('norooms', [] as Object[], 'No rooms', request.locale)
+            redirect action: 'index', controller: 'booking'
+            return
+        }
         [
                 booking: new Booking(params),
                 roomList: roomList,
