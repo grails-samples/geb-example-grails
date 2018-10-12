@@ -41,7 +41,9 @@ class BookingControllerSpec extends Specification implements ControllerUnitTest<
 
     void 'Test the create action returns the correct model'() {
         given:
-        controller.roomDataService = Mock(RoomDataService)
+        controller.roomDataService = Stub(RoomDataService) {
+            list(_) >> [new Room(name: "Room 101")]
+        }
         controller.extraDataService = Mock(ExtraDataService)
 
         when: 'The create action is executed'
