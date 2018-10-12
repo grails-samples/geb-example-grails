@@ -15,21 +15,7 @@ interface BookingRoomDataService {
 
     Number delete(Serializable id)
 
-    @Query("""
-select $room.name 
-from ${BookingRoom bookingRoom}
-inner join ${Room room = bookingRoom.room}
-inner join ${Booking b = bookingRoom.booking}  
-where $b = $booking""")
-    List<String> findBookingRoomNameByBooking(Booking booking)
-
-    @Query("""
-select $room
-from ${BookingRoom bookingRoom}
-inner join ${Room room = bookingRoom.room}
-inner join ${Booking b = bookingRoom.booking}  
-where $b = $booking""")
-    List<Room> findRoomByBooking(Booking booking)
+    List<Room> findBookingRoomRoom(Booking booking)
 
     @Query("""
 select $bookingRoom.id

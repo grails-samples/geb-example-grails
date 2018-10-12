@@ -36,8 +36,8 @@ class BookingController implements BeanMessage {
             notFound()
             return
         }
-        List<String> extraList = bookingExtraDataService.findExtraNameByBooking(booking)
-        List<String> roomList = bookingRoomDataService.findBookingRoomNameByBooking(booking)
+        List<Extra> extraList = bookingExtraDataService.findBookingExtraExtra(booking)
+        List<Room> roomList = bookingRoomDataService.findBookingRoomRoom(booking)
         [booking: booking, roomList: roomList, extraList: extraList]
     }
 
@@ -84,8 +84,8 @@ class BookingController implements BeanMessage {
         List<Room> roomList = roomDataService.list([:])
         List<Extra> extraList = extraDataService.list([:])
 
-        List<Extra> bookingExtraList = bookingExtraDataService.findExtraByBooking(booking)
-        List<Room> bookingRoomList = bookingRoomDataService.findRoomByBooking(booking)
+        List<Extra> bookingExtraList = bookingExtraDataService.findBookingExtraExtra(booking)
+        List<Room> bookingRoomList = bookingRoomDataService.findBookingRoomRoom(booking)
         [
                 booking: booking,
                 roomList: roomList,

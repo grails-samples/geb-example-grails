@@ -14,21 +14,7 @@ interface BookingExtraDataService {
 
     Number delete(Serializable id)
 
-    @Query("""
-select $extra.name 
-from ${BookingExtra bookingExtra}
-inner join ${Extra extra = bookingExtra.extra}  
-inner join ${Booking b = bookingExtra.booking}  
-where $b = $booking""")
-    List<String> findExtraNameByBooking(Booking booking)
-
-    @Query("""
-select $extra 
-from ${BookingExtra bookingExtra}
-inner join ${Extra extra = bookingExtra.booking}  
-inner join ${Booking b = bookingExtra.booking}  
-where $b = $booking""")
-    List<Extra> findExtraByBooking(Booking booking)
+    List<Extra> findBookingExtraExtra(Booking booking)
 
     @Query("""
 select $bookingExtra.id 

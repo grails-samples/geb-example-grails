@@ -18,13 +18,13 @@
                 <g:if test="${roomList}">
                     <li class="fieldcontain">
                         <span id="rooms-label" class="property-label"><g:message code="booking.rooms.label" default="Rooms"/></span>
-                        <div class="property-value" aria-labelledby="name-label">${roomList.join(',')}</div>
+                        <div class="property-value" aria-labelledby="name-label">${roomList*.name.join(',')}</div>
                     </li>
                 </g:if>
                 <g:if test="${extraList}">
                     <li class="fieldcontain">
                         <span id="extras-label" class="property-label"><g:message code="booking.extras.label" default="Extras"/></span>
-                        <div class="property-value" aria-labelledby="name-label">${extraList.join(',')}</div>
+                        <div class="property-value" aria-labelledby="name-label">${extraList*.name.join(',')}</div>
                     </li>
                 </g:if>
             </ol>

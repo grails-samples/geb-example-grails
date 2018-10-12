@@ -77,7 +77,7 @@ class BookingService {
 
     @Transactional
     protected void updateExtras(Booking booking, List<Long> extraIds) {
-        List<Extra> previousExtraList = bookingExtraDataService.findExtraByBooking(booking)
+        List<Extra> previousExtraList = bookingExtraDataService.findBookingExtraExtra(booking)
         List<Long> previousExtraIds = previousExtraList*.id
 
         List<Long> extraIdsToBeInserted = extraIds - previousExtraIds
@@ -100,7 +100,7 @@ class BookingService {
 
     @Transactional
     protected void updateRooms(Booking booking, List<Long> roomIds) {
-        List<Room> previousRoomList = bookingRoomDataService.findRoomByBooking(booking)
+        List<Room> previousRoomList = bookingRoomDataService.findBookingRoomRoom(booking)
         List<Long> previousRoomIds = previousRoomList*.id
 
         List<Long> roomIdsToBeInserted = roomIds - previousRoomIds
