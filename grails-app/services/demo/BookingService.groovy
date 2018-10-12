@@ -37,8 +37,16 @@ class BookingService {
     @Transactional
     Booking delete(Long bookingId) {
         Booking booking = bookingDataService.get(bookingId)
-        bookingExtraDataService.delete(booking)
-        bookingRoomDataService.delete(booking)
+        List<Serializable> bookingExtraIds = bookingExtraDataService.findBookingExtraIdByBookingId(bookingId)
+        int numberOfBookingExtraDeleted = 0
+        for (Serializable bookingExtraId : bookingExtraIds) {
+            numberOfBookingExtraDeleted += bookingExtraDataService.delete(bookingExtraId)
+        }
+        List<Serializable> bookingRoomIds = bookingRoomDataService.findBookingRoomIdByBookingId(bookingId)
+        int numberOfBookingRoomDeleted = 0
+        for (Serializable bookingRoomId : bookingRoomIds) {
+            numberOfBookingRoomDeleted += bookingRoomDataService.delete(bookingRoomId)
+        }
         bookingDataService.delete(bookingId)
         booking
     }

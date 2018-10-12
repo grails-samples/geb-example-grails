@@ -1,5 +1,6 @@
 package demo
 
+import grails.gorm.services.Query
 import grails.gorm.services.Service
 import grails.gorm.services.Where
 import groovy.transform.CompileStatic
@@ -12,8 +13,15 @@ interface BookingExtraDataService {
 
     void delete(Booking booking, Extra extra)
 
-    @Where({ booking == booking })
-    void delete(Booking booking)
+    Number delete(Serializable id)
 
     List<Extra> findBookingExtraExtra(Booking booking)
+    @Where({ booking == b })
+    Number delete(Booking b)
+    @Query("""
+select $bookingExtra.id 
+from ${BookingExtra bookingExtra} 
+inner join ${Booking b = bookingExtra.booking}  
+where $b.id = $bookingId""")
+    List<Serializable> findBookingExtraIdByBookingId(Serializable bookingId)
 }
