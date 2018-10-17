@@ -111,9 +111,12 @@ class BookingCRUDSpec extends GebReportingSpec {
 		page.buttons.edit()
 
 		then:
-		BookingEditPage editPage = at BookingEditPage
+		waitFor {
+			at BookingEditPage
+		}
 
 		when:
+		BookingEditPage editPage = browser.page(BookingEditPage)
 		editPage.name = 'Tim Cook'
 		editPage.uncheck('Room 102')
 		editPage.check('Room 103')

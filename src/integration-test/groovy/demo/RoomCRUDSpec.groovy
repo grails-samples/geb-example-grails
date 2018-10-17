@@ -65,9 +65,12 @@ class RoomCRUDSpec extends GebReportingSpec {
 		page.buttons.edit()
 
 		then:
-		EditRoomPage editPage = at EditRoomPage
+		waitFor {
+			at EditRoomPage
+		}
 
 		when:
+		EditRoomPage editPage = browser.page(EditRoomPage)
 		editPage.name = 'Room101'
 		editPage.buttons.update()
 
@@ -83,7 +86,9 @@ class RoomCRUDSpec extends GebReportingSpec {
 		page.nav.rooms()
 		
 		then:
-		at RoomListPage
+		waitFor {
+			at RoomListPage
+		}
 
 		when:
 		RoomListPage listPage = browser.page RoomListPage

@@ -65,9 +65,12 @@ class ExtraCRUDSpec extends GebReportingSpec {
 		page.buttons.edit()
 
 		then:
-		EditExtraPage editPage = at EditExtraPage
+		waitFor {
+			at EditExtraPage
+		}
 
 		when:
+		EditExtraPage editPage = browser.page(EditExtraPage)
 		editPage.name = 'English Breakfast'
 		editPage.buttons.update()
 
@@ -83,7 +86,10 @@ class ExtraCRUDSpec extends GebReportingSpec {
 		page.nav.extras()
 
 		then:
-		at ExtraListPage
+		waitFor {
+			at ExtraListPage
+		}
+
 
 		when:
 		ExtraListPage listPage = browser.page ExtraListPage
