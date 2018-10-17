@@ -61,7 +61,9 @@ class BookingCRUDSpec extends GebReportingSpec {
 		page.buttons.create()
 
 		then:
-		at CreateBookingPage
+		waitFor {
+			at CreateBookingPage
+		}
 	}
 	
 	def 'enter the details'() {
@@ -82,7 +84,9 @@ class BookingCRUDSpec extends GebReportingSpec {
 		page.save()
 
 		then:
-		at BookingShowPage
+		waitFor {
+			at BookingShowPage
+		}
 	}
 	
 	def 'check the entered details'() {
@@ -117,7 +121,9 @@ class BookingCRUDSpec extends GebReportingSpec {
 		editPage.buttons.update()
 
 		then:
-		at BookingShowPage
+		waitFor {
+			at BookingShowPage
+		}
 	}
 	
 	def 'check in listing'() {
@@ -126,7 +132,9 @@ class BookingCRUDSpec extends GebReportingSpec {
 		page.nav.home()
 
 		then:
-		at BookingListPage
+		waitFor {
+			at BookingListPage
+		}
 
 		when:
 		BookingListPage listPage = browser.page BookingListPage
@@ -149,7 +157,9 @@ class BookingCRUDSpec extends GebReportingSpec {
 		page.table.select('Tim Cook')
 
 		then:
-		at BookingShowPage
+		waitFor {
+			at BookingShowPage
+		}
 
 		and:
 		BookingShowPage showPage = browser.page BookingShowPage
@@ -165,7 +175,9 @@ class BookingCRUDSpec extends GebReportingSpec {
 		withConfirm { page.buttons.delete() }
 
 		then:
-		at BookingListPage
+		waitFor {
+			at BookingListPage
+		}
 
 		when:
 		BookingListPage listPage = browser.page BookingListPage

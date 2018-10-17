@@ -30,7 +30,9 @@ class RoomCRUDSpec extends GebReportingSpec {
 		page.buttons.create()
 
 		then:
-		at CreateRoomPage
+		waitFor {
+			at CreateRoomPage
+		}
 	}
 
 	def 'enter the details'() {
@@ -42,7 +44,9 @@ class RoomCRUDSpec extends GebReportingSpec {
 		page.save()
 
 		then:
-		at ShowRoomPage
+		waitFor {
+			at ShowRoomPage
+		}
 	}
 
 	def 'check the entered details'() {
@@ -68,7 +72,9 @@ class RoomCRUDSpec extends GebReportingSpec {
 		editPage.buttons.update()
 
 		then:
-		at ShowRoomPage
+		waitFor {
+			at ShowRoomPage
+		}
 	}
 
 	def 'check in listing'() {
@@ -100,7 +106,9 @@ class RoomCRUDSpec extends GebReportingSpec {
 		page.table.select('Room101')
 
 		then:
-		at ShowRoomPage
+		waitFor {
+			at ShowRoomPage
+		}
 	}
 
 	def 'delete room'() {
@@ -111,7 +119,9 @@ class RoomCRUDSpec extends GebReportingSpec {
 		withConfirm { page.buttons.delete() }
 
 		then:
-		at RoomListPage
+		waitFor {
+			at RoomListPage
+		}
 
 		when:
 		RoomListPage listPage = browser.page RoomListPage

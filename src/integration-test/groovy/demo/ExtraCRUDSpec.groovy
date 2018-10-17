@@ -30,7 +30,9 @@ class ExtraCRUDSpec extends GebReportingSpec {
 		page.buttons.create()
 
 		then:
-		at CreateExtraPage
+		waitFor {
+			at CreateExtraPage
+		}
 	}
 
 	def 'enter the extra details'() {
@@ -42,7 +44,9 @@ class ExtraCRUDSpec extends GebReportingSpec {
 		page.save()
 
 		then:
-		at ShowExtraPage
+		waitFor {
+			at ShowExtraPage
+		}
 	}
 
 	def 'check the entered details for the extra'() {
@@ -68,7 +72,9 @@ class ExtraCRUDSpec extends GebReportingSpec {
 		editPage.buttons.update()
 
 		then:
-		at ShowExtraPage
+		waitFor {
+			at ShowExtraPage
+		}
 	}
 
 	def 'check extra in listing'() {
@@ -100,7 +106,9 @@ class ExtraCRUDSpec extends GebReportingSpec {
 		page.table.select('English Breakfast')
 
 		then:
-		at ShowExtraPage
+		waitFor {
+			at ShowExtraPage
+		}
 	}
 
 	def 'delete extra'() {
@@ -111,7 +119,9 @@ class ExtraCRUDSpec extends GebReportingSpec {
 		withConfirm { page.buttons.delete() }
 
 		then:
-		at ExtraListPage
+		waitFor {
+			at ExtraListPage
+		}
 
 		when:
 		ExtraListPage listPage = browser.page ExtraListPage
