@@ -15,6 +15,7 @@ class RoomController implements BeanMessage {
     static allowedMethods = [
             index: 'GET',
             show: 'GET',
+            create: 'GET',
             save: 'POST',
             edit: 'GET',
             update: 'PUT',

@@ -18,6 +18,7 @@ class BookingController implements BeanMessage {
 
     static allowedMethods = [
             index: 'GET',
+            show: 'GET',
             create: 'GET',
             save: 'POST',
             edit: 'GET',
