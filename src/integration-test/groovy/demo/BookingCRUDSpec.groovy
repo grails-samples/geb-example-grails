@@ -7,7 +7,7 @@ import demo.pages.booking.BookingShowPage
 import geb.spock.GebReportingSpec
 import grails.testing.mixin.integration.Integration
 import grails.testing.spock.OnceBefore
-import spock.lang.IgnoreIf
+import spock.lang.Requires
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -15,7 +15,7 @@ import java.time.LocalDate
 
 @Integration
 @Stepwise
-@IgnoreIf({ !System.getProperty('geb.env') })
+@Requires({ sys['geb.env'] })
 class BookingCRUDSpec extends GebReportingSpec {
 
 	@Shared

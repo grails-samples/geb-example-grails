@@ -6,12 +6,12 @@ import demo.pages.extra.ExtraListPage
 import demo.pages.extra.ShowExtraPage
 import geb.spock.GebReportingSpec
 import grails.testing.mixin.integration.Integration
-import spock.lang.IgnoreIf
+import spock.lang.Requires
 import spock.lang.Stepwise
 
 @Integration
 @Stepwise
-@IgnoreIf({ !System.getProperty('geb.env') })
+@Requires({ sys['geb.env'] })
 class ExtraCRUDSpec extends GebReportingSpec {
 
 	def 'there are no extras'() {

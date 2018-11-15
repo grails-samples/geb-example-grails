@@ -7,11 +7,12 @@ import demo.pages.room.ShowRoomPage
 import geb.spock.GebReportingSpec
 import grails.testing.mixin.integration.Integration
 import spock.lang.IgnoreIf
+import spock.lang.Requires
 import spock.lang.Stepwise
 
 @Integration
 @Stepwise
-@IgnoreIf({ !System.getProperty('geb.env') })
+@Requires({ sys['geb.env'] })
 class RoomCRUDSpec extends GebReportingSpec {
 
 	def 'there are no rooms'() {
