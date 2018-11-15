@@ -8,6 +8,6 @@ class NameCommand implements Validateable {
     String name
 
     static constraints = {
-        name nullable: false, blank: false
+        name nullable: false, blank: false, maxSize: 255
     }
 }

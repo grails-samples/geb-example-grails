@@ -18,9 +18,9 @@ class Booking {
     int babys = 0
 
     static constraints = {
-        name nullable: false, blank: false
-        email nullable: false, blank: false, email: true
-        telephone nullable: true
+        name nullable: false, blank: false, maxSize: 255
+        email nullable: false, blank: false, email: true, maxSize: 255
+        telephone nullable: true, maxSize: 255
         arrival nullable: false
         departure nullable: false
         adults min: 1
