@@ -238,35 +238,7 @@ class BookingControllerSpec extends Specification
         response.redirectedUrl.startsWith('/booking/show')
         controller.flash.message != null
     }
-
-    @Ignore
-    void 'Test the update action with an invalid instance'() {
-        given:
-        controller.bookingService = Stub(BookingService) {
-            update(_, _, _) >> { ->
-                Booking booking = new Booking()
-                throw new ValidationException('Invalid instance', booking.errors)
-            }
-        }
-
-        when: 'The save action is executed with an invalid instance'
-        request.contentType = FORM_CONTENT_TYPE
-        request.method = 'PUT'
-        params.id = 1
-        params.version = 1
-        params.name = 'Tim'
-        params.email = 'sergio.delamo@softamo.com'
-        params.arrival = bookingArrival
-        params.departure = bookingDeparture
-        params.adults = 2
-        params.rooms = [2]
-
-        controller.update()
-
-        then: 'The edit view is rendered again with the correct model'
-        model.booking != null
-        view == 'edit'
-    }
+    
 
     void 'Test the delete action with a null instance'() {
         when: 'The delete action is called for a null instance'
