@@ -32,8 +32,6 @@ class EditBookingCommand implements Validateable {
         adults min: 1
         children min: 0
         babys min: 0
-        rooms nullable: false, minSize: 1
-        extras nullable: true, minSize: 0
     }
 
     Object asType(Class clazz) {

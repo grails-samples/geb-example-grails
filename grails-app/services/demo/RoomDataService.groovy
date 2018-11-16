@@ -12,13 +12,15 @@ interface RoomDataService {
 
     List<Room> list(Map args)
 
-    Long count()
+    Number count()
 
     void delete(Serializable id)
 
     Room save(String name)
 
     Room save(Room room)
+
+    Room update(Serializable id, String name)
 
     @Where({ id in ids })
     List<Room> find(List<Long> ids)

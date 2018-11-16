@@ -35,7 +35,7 @@ class ExtraController implements BeanMessage {
     }
 
     def save(NameCommand cmd) {
-        if ( cmd.hasErrors() ) {
+        if (cmd.hasErrors()) {
             respond cmd.errors, view: 'edit'
             return
         }
@@ -49,8 +49,11 @@ class ExtraController implements BeanMessage {
             return
         }
 
-        flash.message = messageSource.getMessage('default.created.message', [extraMessage(), extra.id] as Object[], 'Extra created', request.locale)
-        redirect action: 'show', id: extra.id
+        flash.message = messageSource.getMessage('default.created.message',
+                [extraMessage(), extra.id] as Object[],
+                'Extra created',
+                request.locale)
+        redirect action: 'show', id: extra?.id
     }
 
     def edit(Long id) {
@@ -58,7 +61,7 @@ class ExtraController implements BeanMessage {
     }
 
     def update(NameIdCommand cmd) {
-        if ( cmd.hasErrors() ) {
+        if (cmd.hasErrors()) {
             respond cmd.errors, view: 'edit'
             return
         }

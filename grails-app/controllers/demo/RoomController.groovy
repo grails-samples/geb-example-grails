@@ -35,14 +35,15 @@ class RoomController implements BeanMessage {
         respond new Room(params)
     }
 
-    def save(Room room) {
-        if (room == null) {
-            notFound()
+    def save(NameCommand cmd) {
+        if (cmd.hasErrors()) {
+            respond cmd.errors, view: 'edit'
             return
         }
 
+        Room room
         try {
-            roomDataService.save(room)
+            room = roomDataService.save(cmd.name)
         } catch (ValidationException e) {
             flash.error = beanMessage(e, messageSource).join(',')
             render view: 'create'
@@ -50,29 +51,33 @@ class RoomController implements BeanMessage {
         }
 
         flash.message = messageSource.getMessage('default.created.message', [roomMessage(), room.id] as Object[], 'Room created', request.locale)
-        redirect room
+        redirect action: 'show', id: room?.id
     }
 
     def edit(Long id) {
         respond roomDataService.get(id)
     }
 
-    def update(Room room) {
-        if (room == null) {
-            notFound()
+    def update(NameIdCommand cmd) {
+        if (cmd.hasErrors()) {
+            respond cmd.errors, view: 'edit'
             return
         }
 
+        Room room
         try {
-            roomDataService.save(room)
+            room = roomDataService.update(cmd.id, cmd.name)
         } catch (ValidationException e) {
             flash.error = beanMessage(e, messageSource).join(',')
             render view: 'edit'
             return
         }
 
-        flash.message = messageSource.getMessage('default.updated.message', [roomMessage(), room.id] as Object[], 'Room updated', request.locale)
-        redirect room
+        flash.message = messageSource.getMessage('default.updated.message',
+                [roomMessage(), room.id] as Object[],
+                'Room updated',
+                request.locale)
+        redirect action: 'show', id: room?.id
     }
 
     def delete(Long id) {

@@ -20,7 +20,7 @@ The build reports directory is [defined in build.gradle](https://github.com/grai
 
 To allow integration tests to be run without Geb Specifications, `RoomCRUDSpec`, `ExtraCRUDSpec` and `BookingCRUDSpec` are annotated with: 
 
-`@IgnoreIf({ !System.getProperty('geb.env') })`
+`@Requires({ sys['geb.env'] })`
  
 The application uses [Geb Pages and Modules](https://github.com/grails-samples/geb-example-grails/tree/master/src/integration-test/groovy/com/test/pages) to faciliate test maintainability.
 
