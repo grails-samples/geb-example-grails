@@ -1,7 +1,6 @@
 addons:
   chrome: stable
   firefox: latest
-sudo: required
 jdk:
   - oraclejdk8
 script: "./travis-build.sh"
