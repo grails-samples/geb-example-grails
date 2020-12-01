@@ -2,6 +2,7 @@ package demo.browserautomation.pages.booking
 
 import geb.Page
 import geb.module.Checkbox
+import geb.module.Select
 import geb.module.TextInput
 
 import java.time.LocalDate
@@ -19,9 +20,9 @@ class CreateBookingPage extends Page {
 		emailField { $('input', type: 'email', name: it) }
 		numberField { $('input', type: 'number', name: it) }
 		saveButton { $('input', type: 'submit') }
-		selectDay { $('select', name: "${it}_day") }
-		selectMonth { $('select', name: "${it}_month") }
-		selectYear { $('select', name: "${it}_year") }
+		selectDay { $('select', name: "${it}_day").module(Select) }
+		selectMonth { $('select', name: "${it}_month").module(Select) }
+		selectYear { $('select', name: "${it}_year").module(Select) }
 		field { $('li.fieldcontain .property-label', text: it).parent() }
 		fieldCheckbox { field(it).find('input', type: 'checkbox', 0).module(Checkbox) }
 	}
@@ -35,9 +36,9 @@ class CreateBookingPage extends Page {
 	}
 
 	void populateDate(String name, int day, int month, int year) {
-		selectDay(name).value(day)
-		selectMonth(name).value(month)
-		selectYear(name).value(year)
+		selectDay(name).setSelected("" + day)
+		selectMonth(name).setSelected("" + month)
+		selectYear(name).setSelected("" + year)
 	}
 
 	void populate(String inputFieldName, String value) {
