@@ -1,32 +1,12 @@
 package demo.browserautomation.pages.extra
 
-import demo.browserautomation.modules.UpdateDeleteModule
-import geb.Page
-import geb.module.TextInput
+import demo.browserautomation.pages.EditPage
 
-class EditExtraPage extends Page {
+class EditExtraPage extends EditPage {
 
     static at = {
         title == 'Edit Extra'
     }
 
     static url = '/extra/edit'
-
-    String convertToPath(Object[] args) {
-        args ? "/${args[0]}" : ""
-    }
-
-    static content = {
-        inputField { $('input', name: it).module(TextInput) }
-        buttons { $('fieldset.buttons').module(UpdateDeleteModule) }
-    }
-
-    void populate(String inputFieldName, String value) {
-        inputField(inputFieldName).text = value
-    }
-
-    void setName(String name) {
-        populate('name', name)
-    }
-
 }
