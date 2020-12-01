@@ -1,11 +1,12 @@
 package demo.browserautomation.pages.booking
 
+import demo.browserautomation.TextInputUtils
 import demo.browserautomation.modules.UpdateDeleteModule
 import geb.Page
 import geb.module.Checkbox
 import geb.module.TextInput
 
-class BookingEditPage extends Page {
+class BookingEditPage extends Page implements TextInputUtils {
 
 	static at = {
 		title == 'Edit Booking'
@@ -32,11 +33,8 @@ class BookingEditPage extends Page {
 		fieldCheckbox(name).uncheck()
 	}
 
-	void populate(String inputFieldName, String value) {
-		inputField(inputFieldName).text = value
-	}
-
 	void setName(String name) {
+		clearTextInput('name')
 		populate('name', name)
 	}
 }
